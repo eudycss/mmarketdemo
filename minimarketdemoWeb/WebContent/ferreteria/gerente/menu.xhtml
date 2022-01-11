@@ -12,10 +12,10 @@
 <body>
 	<h:form>
 		<p:menubar>
-			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu" />
-			<p:menuitem value="Personas" icon="pi pi-briefcase" action="personas" />
-			<p:menuitem value="Stock" icon="pi pi-briefcase" action="..inventario/stock/menu" />
-			<p:menuitem value="Nueva Orden" icon="pi pi-briefcase" action="ordenes_nuevo" />
+			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu"/>
+			<p:menuitem value="Stock" icon="pi pi-briefcase" action="stock" />
+			<p:menuitem value="Compras" icon="pi pi-briefcase"  />
+			<p:menuitem value="Nueva Orden" icon="pi pi-briefcase" />
 			
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
@@ -30,49 +30,51 @@
 
 	<div>
 		<p:staticMessage severity="info"
-			summary="LISTA DE ORDENES"></p:staticMessage>
+			summary="LISTA DE STOCK"></p:staticMessage>
 			
 		<h:form id="FormOrdenes">
-			<p:dataTable value="#{beanCompAdministrador.listaProveedores}"
+			<p:dataTable
 				var="p">
 
-				<p:column headerText="ID" style="width:40px">
-					<h:outputText value="#{p.proveId}" />
+				<p:column headerText="ID STOCK" style="width:40px">
+					<h:outputText/>
 				</p:column>
 
-				<p:column headerText="Detalle">
-					<h:outputText value="#{p.proveRuc}" />
+					<p:column headerText="ID PRODUCTO" style="width:40px">
+					<h:outputText />
+				</p:column>
+				
+				<p:column headerText="CANTIDDAD">
+					<h:outputText/>
 				</p:column>
 
-				<p:column headerText="OBSERVACION">
-					<h:outputText value="#{p.proveNombre}" />
+				<p:column headerText="STOCK MÍNIMO">
+					<h:outputText/>
 				</p:column>
 
+				 	<p:column headerText="STOCK MÁXIMO">
+					<h:outputText/>
+				</p:column>
+				
 				<p:column headerText="ESTADO DE PAGO">
-					<h:outputText value="#{p.proveNomcomercial}" />
+					<h:outputText  />
 				</p:column>
 
-				<p:column headerText="FECHA INICIO">
-					<h:outputText value="#{p.proveDireccion}" />
-				</p:column>
-
-				<p:column headerText="FECHA FIN">
-					<h:outputText value="#{p.proveTelefono}" />
-				</p:column>
+				
 
 				<p:column headerText="ESTADO DE ORDEN">
-					<h:outputText value="#{p.ciudad.ciuNombre}" />
+					<h:outputText />
 				</p:column>
 
 				<p:column headerText="OPCIONES">
-					<p:commandButton title="Hacer cambios de #{p.proveNomcomercial}"
+					<p:commandButton title="Hacer cambios de "
 						value="Editar" icon="pi pi-pencil"
-						actionListener="#{beanCompAdministrador.actionListenerActualizarProveedor(p)}"
+						actionListener=""
 						styleClass="rounded-button ui-button-secondary" />
 					<p:commandButton
-						title="Eliminar #{p.proveNomcomercial} de la lista de proveedores"
+						title="Eliminar  de la lista de proveedores"
 						value="Eliminar" icon="pi pi-pencil"
-						actionListener="#{beanCompAdministrador.actionListenerEliminarProveedor(p)}"
+						actionListener=""
 						styleClass="rounded-button ui-button-danger" />
 				</p:column>
 			</p:dataTable>
