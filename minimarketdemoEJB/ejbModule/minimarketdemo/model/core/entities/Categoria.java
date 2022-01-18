@@ -20,6 +20,9 @@ public class Categoria implements Serializable {
 	@Column(name="id_categoria", unique=true, nullable=false)
 	private Integer idCategoria;
 
+	@Column(name="estado_categoria", nullable=false)
+	private Boolean estadoCategoria;
+
 	@Column(name="nombre_categoria", nullable=false, length=50)
 	private String nombreCategoria;
 
@@ -36,6 +39,14 @@ public class Categoria implements Serializable {
 
 	public void setIdCategoria(Integer idCategoria) {
 		this.idCategoria = idCategoria;
+	}
+
+	public Boolean getEstadoCategoria() {
+		return this.estadoCategoria;
+	}
+
+	public void setEstadoCategoria(Boolean estadoCategoria) {
+		this.estadoCategoria = estadoCategoria;
 	}
 
 	public String getNombreCategoria() {

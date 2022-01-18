@@ -7,6 +7,8 @@
 		<class>minimarketdemo.model.core.entities.Categoria</class>
 		<class>minimarketdemo.model.core.entities.Persona</class>
 		<class>minimarketdemo.model.core.entities.Producto</class>
+		<class>minimarketdemo.model.core.entities.ProformaDet</class>
+		<class>minimarketdemo.model.core.entities.ProformasCab</class>
 		<class>minimarketdemo.model.core.entities.Proveedore</class>
 		<class>minimarketdemo.model.core.entities.PryProyecto</class>
 		<class>minimarketdemo.model.core.entities.PryTarea</class>

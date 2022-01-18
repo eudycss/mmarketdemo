@@ -1,5 +1,7 @@
 package minimarketdemo.model.ventas.managers;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -8,6 +10,7 @@ import javax.ejb.Stateless;
 
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
 import minimarketdemo.model.core.entities.Persona;
+import minimarketdemo.model.core.entities.ProformasCab;
 import minimarketdemo.model.core.entities.SegUsuario;
 import minimarketdemo.model.core.managers.ManagerDAO;
 import minimarketdemo.model.seguridades.dtos.LoginDTO;
@@ -59,11 +62,11 @@ public class ManagerVentas {
 			// Nuevo codigo auditoria
 			// Forma simple
 			// mostrarLog(getClass(), "insertar Persona", "Persona:
-			// "+nuevaPersona.getProvCiuNombre()+ " agregada con éxito"); Usar reflexion
+			// "+nuevaPersona.getProvCiuNombre()+ " agregada con ï¿½xito"); Usar reflexion
 			// para ingreso automatico
 			// Forma compuesta
 		//	mAuditoria.mostrarLog(loginDTO, getClass(), "insertarPersona", "Persona: " + nuevaPersona.getApellido() + " "
-				//	+ nuevaPersona.getNombre() + " agregada con éxito");
+				//	+ nuevaPersona.getNombre() + " agregada con ï¿½xito");
 
 		}
 
@@ -79,7 +82,7 @@ public class ManagerVentas {
 			persona.setEstadoPersona(edicionPersona.getEstadoPersona());
 			mDAO.actualizar(persona);
 			mAuditoria.mostrarLog(loginDTO, getClass(), "actualizarPersona",
-					"se actualizó la persona " + edicionPersona.getApellido() + " " + edicionPersona.getNombre());
+					"se actualizï¿½ la persona " + edicionPersona.getApellido() + " " + edicionPersona.getNombre());
 		}
 		//Activar/Desactivar
 	    public void activarDesactivarPersona(int idPersona) throws Exception {
@@ -98,6 +101,65 @@ public class ManagerVentas {
 			mDAO.eliminar(Persona.class, persona.getIdPersona());
 			// TODO agregar uso de LoginDTO para auditar metodo.
 		}
+
+////////--------------------PROFORMAS CABECERA---------------------------------------------------------
+
+	// Inicializar proformas cab
+
+	public ProformasCab inicializarProformasCab() {
+		ProformasCab proformasCab = new ProformasCab();
+		proformasCab.setPersona(new Persona()); // prueba
+		proformasCab.setPfCabFecha(new Date());
+		proformasCab.setPfCabSubtototal(new BigDecimal(0)); 
+		proformasCab.setPfCabIva(new BigDecimal(0));
+		proformasCab.setPfCabTotal(new BigDecimal(0));
+		return proformasCab;
+	}
+
+	// Listar proformas cab
+	public List<ProformasCab> findAllProformasCabs() {
+		return mDAO.findAll(ProformasCab.class);
+	}
+
+	// Insercion de Proformas Cab
+	public void insertarProformasCab(LoginDTO loginDTO, ProformasCab nuevaProformasCab, int personaSeleccionada)
+			throws Exception {
+
+		Persona persona = (Persona) mDAO.findById(Persona.class, personaSeleccionada); // Encontrar el cliente
+		nuevaProformasCab.setPersona(persona);
+
+		mDAO.insertar(nuevaProformasCab);
+		// Nuevo codigo auditoria
+		// Forma simple
+		// mostrarLog(getClass(), "insertar Cliente", "Cliente:
+		// "+nuevaCliente.getProvCiuNombre()+ " agregada con ï¿½xito"); Usar reflexion
+		// para ingreso automatico
+		// Forma compuesta
+		mAuditoria.mostrarLog(loginDTO, getClass(), "insertarProformasCab",
+				"ProformasCab: " + nuevaProformasCab.getPfCabId() + " agregada con ï¿½xito");
+	}
+
+	// Actualizacion de ProformasCab
+	public void actualizarProformasCab(LoginDTO loginDTO, ProformasCab edicionProformasCab) throws Exception {
+		ProformasCab proformasCab = (ProformasCab) mDAO.findById(ProformasCab.class, edicionProformasCab.getPfCabId()); // Buscar el cliente
+
+		proformasCab.setPersona(edicionProformasCab.getPersona());
+		
+		mDAO.actualizar(proformasCab);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "actualizarProformasCab",
+				"se actualizï¿½ a ProformasCab " + edicionProformasCab.getPfCabId());
+	}
+
+	// Borracion de ProformasCab
+	public void eliminarProformasCab(int ProformasCabId) throws Exception {
+		ProformasCab proformasCab = (ProformasCab) mDAO.findById(ProformasCab.class, ProformasCabId); // Encontrar el
+																										// cliente a
+																										// eliminar
+		//if (proformasCab.getProformaDets().size() > 0)
+		//	throw new Exception("No se puede elimininar la proforma porque tiene productos registrados.");
+		//mDAO.eliminar(ProformasCab.class, proformasCab.getPfCabId());
+		// TODO agregar uso de LoginDTO para auditar metodo.
+	}
 
 	
 
