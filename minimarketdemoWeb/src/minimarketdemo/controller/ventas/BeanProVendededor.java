@@ -119,6 +119,41 @@ public class BeanProVendededor implements Serializable {
 		}
 	}
 	
+	
+	
+	//----------------------------- PROFORMAS-DETALLE---------------------------------------------------------------------
+	// Cargar pagina de ingreso de Proformas Detalle
+	
+		public String actionCargarProformasDet(ProformasCab proformaCab) {
+			listaProductos=mVentas.findAllProductos();
+			proformaCabSeleccionada=proformaCab;
+			listaProformasDet=mVentas.findDetalleByProforma(proformaCabSeleccionada.getPfCabId());
+			nuevaProformaDet=mVentas.inicializarProformasDet(proformaCabSeleccionada);
+			return "detalles?faces-redirect=true";
+		}
+		
+		//Actualizar lista del boton Regresar
+		public String cargarPaginaProformas() {
+			listaProformasCab=mVentas.findAllProformasCabs();
+			return "proformas";
+		}
+		
+	// ----------------Inserccion
+	// Agregar
+		
+	public void actionListenerInsertarProformaDet() {
+		try {
+			mVentas.insertarProformasDet(beanSegLogin.getLoginDTO(), nuevaProformaDet,productoSeleccionado);
+			JSFUtil.crearMensajeINFO("Detalle agregado agregada con �xito");
+			nuevaProformaDet=mVentas.inicializarProformasDet(proformaCabSeleccionada);
+			listaProformasDet=mVentas.findDetalleByProforma(proformaCabSeleccionada.getPfCabId());
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
 		public List<Persona> getListaPersonas() {
 		return listaPersonas;
 	}

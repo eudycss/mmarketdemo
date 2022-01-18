@@ -10,6 +10,8 @@ import javax.ejb.Stateless;
 
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
 import minimarketdemo.model.core.entities.Persona;
+import minimarketdemo.model.core.entities.Producto;
+import minimarketdemo.model.core.entities.ProformaDet;
 import minimarketdemo.model.core.entities.ProformasCab;
 import minimarketdemo.model.core.entities.SegUsuario;
 import minimarketdemo.model.core.managers.ManagerDAO;
@@ -161,6 +163,91 @@ public class ManagerVentas {
 		// TODO agregar uso de LoginDTO para auditar metodo.
 	}
 
+	//--------------------------------------PRODUCTOS-----------------------------------
+	
+		//Listar productos
+		public List<Producto> findAllProductos(){
+			return mDAO.findAll(Producto.class);
+		}
+		
+		// -------------------------------------PROFORMAS-DETALLE---------------------------
+
+
+		//Listar detalles segun proforma
+		public List<ProformaDet> findDetalleByProforma(int proformaId){
+	    	return mDAO.findWhere(ProformaDet.class, "o.proformasCab.pfCabId="+proformaId, "o.pfDetId");
+	    }
+		
+		// Inicializar
+		public ProformaDet inicializarProformasDet(ProformasCab proformasCab) {
+			ProformaDet proformasDet = new ProformaDet();
+
+			proformasDet.setProformasCabs(proformasCab);
+			proformasDet.setProducto(new Producto());
+			proformasDet.setPfDetCantidad(0);
+			proformasDet.setPfDetPrecio(new BigDecimal(0));
+			proformasDet.setPfDetPreciototal(new BigDecimal(0));
+			//proformasDet.setProformasCab(proformasCab); // Inicializamos con el ID de la proforma Cab
+			//proformasDet.setProducto(new Producto());
+			//proformasDet.setProDetCantidad(0);
+			//proformasDet.setProDetPrecio(new BigDecimal(0));
+			//proformasDet.setProDetPreciototal(new BigDecimal(0));
+			return proformasDet;
+		}
+
+		// Insercion de Proformas Cab
+		public void insertarProformasDet(LoginDTO loginDTO, ProformaDet nuevaProformasDet,int productoSeleccionado) throws Exception {
+
+			Producto producto = (Producto) mDAO.findById(Producto.class, productoSeleccionado); // Encontrar la proforma
+			nuevaProformasDet.setProducto(producto);
+			nuevaProformasDet.setPfDetPrecio(producto.getPrecioCompraProd());
+			nuevaProformasDet.setPfDetPreciototal(
+					calculoPrecioTotal(producto.getPrecioCompraProd(), nuevaProformasDet.getPfDetCantidad()));
+			//nuevaProformasDet.setProDetPrecio(producto.getProducPreciou());
+			//nuevaProformasDet.setProDetPreciototal(
+					//calculoPrecioTotal(producto.getProducPreciou(), nuevaProformasDet.getProDetCantidad()));
+
+			mDAO.insertar(nuevaProformasDet);
+			// Forma compuesta
+			mAuditoria.mostrarLog(loginDTO, getClass(), "insertarProformasDet",	"Detalle: " + nuevaProformasDet.getPfDetId() + " agregada con �xito");
+			//Actualizar total de proforma cabecera
+			calcularTotalProforma(nuevaProformasDet.getProformasCabs().getPfCabId());
+		}
+		
+		
+		//Metodo para actualizar Total de ProformasCabecera
+		public void calcularTotalProforma(int proformaId) throws Exception {
+			
+			//Buscar proforma
+	    	ProformasCab proformaCab=(ProformasCab) mDAO.findById(ProformasCab.class, proformaId);
+	    	//Agregar a una lista los detalles de dicha proforma
+	    	List<ProformaDet> detalles=findDetalleByProforma(proformaId);
+	    	double suma=0;
+	    	for(ProformaDet d:detalles) {
+	    		suma+=d.getPfDetPreciototal().doubleValue();
+	    	}
+	    	double iva = suma*0.12;
+	    	double TotalFinal = suma + iva;
+	    	
+	    	BigDecimal sumaT = new BigDecimal(suma);
+	    	BigDecimal ivaT = new BigDecimal(iva);
+	    	BigDecimal TotalFinalT = new BigDecimal(TotalFinal);
+	    	System.out.println("suma total:"+sumaT);
+	    	proformaCab.setPfCabSubtototal(sumaT);
+	    	proformaCab.setPfCabIva(ivaT);
+	    	proformaCab.setPfCabTotal(TotalFinalT);
+	    	
+	    	mDAO.actualizar(proformaCab);
+	    }
+		
+		public BigDecimal calculoPrecioTotal(BigDecimal precioU, int cant) {
+			double precio_unitario = precioU.doubleValue();
+			double precioTotal = precio_unitario * cant;
+
+			BigDecimal precioT = new BigDecimal(precioTotal);
+			return precioT;
+		}
+		
 	
 
 }
