@@ -1,6 +1,7 @@
 package minimarketdemo.model.ventas.managers;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -226,14 +227,18 @@ public class ManagerVentas {
 	    	for(ProformaDet d:detalles) {
 	    		suma+=d.getPfDetPreciototal().doubleValue();
 	    	}
-	    	double iva = suma*0.12;
-	    	double TotalFinal = suma + iva;
+	    	//double iva =  Math.round(suma*0.12) ;
+	    	//double TotalFinal = Math.round(suma + iva);
+	    	double iva =  suma*0.12 ;
+	    	double TotalFinal =suma + iva;
 	    	
-	    	BigDecimal sumaT = new BigDecimal(suma);
-	    	BigDecimal ivaT = new BigDecimal(iva);
-	    	BigDecimal TotalFinalT = new BigDecimal(TotalFinal);
-	    	System.out.println("suma total:"+sumaT);
-	    	proformaCab.setPfCabSubtototal(sumaT);
+	    	BigDecimal sumaT = new BigDecimal(suma).setScale(2, RoundingMode.HALF_UP);
+	    	BigDecimal ivaT = new BigDecimal(iva).setScale(2, RoundingMode.HALF_UP);
+	    	BigDecimal TotalFinalT = new BigDecimal(TotalFinal).setScale(2, RoundingMode.HALF_UP);
+	    	System.out.println("suma total:"+sumaT.doubleValue());
+	    	double sumaT1=sumaT.doubleValue();
+	    	
+	    	proformaCab.setPfCabSubtototal((sumaT));
 	    	proformaCab.setPfCabIva(ivaT);
 	    	proformaCab.setPfCabTotal(TotalFinalT);
 	    	

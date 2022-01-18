@@ -66,14 +66,14 @@
 						styleClass="rounded-button ui-button-secondary" />
 					<p:commandButton
 						title="Eliminar proforma #{p.pfCabId} de la lista de proformas"
-						value="Eliminar" icon="pi pi-pencil"
+						 icon="pi pi-times"
 						actionListener="#{beanProVendededor.actionListenerEliminarProformasCab(p)}"
-						styleClass="rounded-button ui-button-danger" />
+						styleClass="rounded-button ui-button-danger ui-button-outlined" />
 					<p:commandButton
 						title="Listar productos de Proforma #{p.pfCabId}"
-						value="Productos" icon="pi pi-pencil"
+						value="Productos" icon="pi pi-bookmark"
 						action="#{beanProVendededor.actionCargarProformasDet(p)}"
-						styleClass="rounded-button ui-button-success" />
+						styleClass="ui-button-raised ui-button-success" />
 				</p:column>
 			</p:dataTable>
 		</h:form>

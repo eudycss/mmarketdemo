@@ -37,18 +37,25 @@
 			<h:outputText value="Producto:" />
 				<p:selectOneMenu
 					value="#{beanProVendededor.productoSeleccionado}">
-					<f:selectItem itemLabel="Seleccione..." noSelectionOption="true" />
+					<f:selectItem itemLabel="Elegir..." noSelectionOption="true" />
 					<f:selectItems value="#{beanProVendededor.listaProductos}"
 						var="p" itemLabel="#{p.nombreProducto}" itemValue="#{p.idProducto}">
 					</f:selectItems>
 				</p:selectOneMenu>
 			
 				<h:outputText value="Cantidad:" />
-				<p:inputText value="#{beanProVendededor.nuevaProformaDet.pfDetCantidad}" />
+				<p:spinner value="#{beanProVendededor.nuevaProformaDet.pfDetCantidad}">
+				
+				</p:spinner>
+				
 				 
 				<p:commandButton value="Insertar" icon="pi pi-save"
 					update="@form,:formDetalles"
-					action="#{beanProVendededor.actionListenerInsertarProformaDet()}"></p:commandButton>
+					action="#{beanProVendededor.actionListenerInsertarProformaDet()}"
+					styleClass="ui-button-raised ui-button-success"
+					>
+					
+					</p:commandButton>
 			</p:panelGrid>
 		</h:form>
 		
@@ -88,10 +95,10 @@
 						value="Editar" icon="pi pi-pencil"
 						actionListener="#{beanProVendededor.actionListenerActualizarEdicionProformasCab(p)}"
 						
-						styleClass="rounded-button ui-button-secondary" />
+						styleClass="rounded-button ui-button-warning" />
 					<p:commandButton
 						title="Eliminar proforma #{p.proCabId} de la lista de proformas"
-						value="Eliminar" icon="pi pi-pencil"
+						value="Eliminar" icon="pi pi-times"
 						actionListener="#{beanVenVendedor.actionListenerEliminarProformasCab(p)}"
 						styleClass="rounded-button ui-button-danger" />
 				</p:column>
