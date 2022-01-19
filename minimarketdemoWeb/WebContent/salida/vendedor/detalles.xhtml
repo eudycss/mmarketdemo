@@ -52,10 +52,9 @@
 				<p:commandButton value="Insertar" icon="pi pi-save"
 					update="@form,:formDetalles"
 					action="#{beanProVendededor.actionListenerInsertarProformaDet()}"
-					styleClass="ui-button-raised ui-button-success"
-					>
+					styleClass="ui-button-raised ui-button-success">
+				</p:commandButton>
 					
-					</p:commandButton>
 			</p:panelGrid>
 		</h:form>
 		
@@ -90,10 +89,10 @@
 					<h:outputText value="#{pd.pfDetPreciototal}" />
 				</p:column>
 
-				<p:column headerText="OPCIONES">
+				<p:column headerText="OPCIONES Det">
 					<p:commandButton title="Hacer cambios de proforma "
 						value="Editar" icon="pi pi-pencil"
-						actionListener="#{beanProVendededor.actionListenerActualizarEdicionProformasCab(p)}"
+						actionListener="#{beanProVendededor.actionSeleccionarEdicionDetalle(pd)}"
 						
 						styleClass="rounded-button ui-button-warning" />
 					<p:commandButton

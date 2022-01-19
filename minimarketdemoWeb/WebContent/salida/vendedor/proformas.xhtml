@@ -14,7 +14,7 @@
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
 			<p:menuitem value="Nueva Proforma" icon="pi pi-briefcase"
-				action="#{beanProVendededor.actionCargarAgregarProforma()}" />
+				action="#{beanProVendededor.actionCargarProformaCabecera()}" />
 
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
@@ -29,7 +29,7 @@
 
 	<div>
 		<p:staticMessage severity="info"
-			summary="LISTA DE PROFORMAS - ADMINISTRADOR"></p:staticMessage>
+			summary="LISTA DE PROFORMAS "></p:staticMessage>
 
 		<h:form id="FormOrdenes">
 			<p:dataTable value="#{beanProVendededor.listaProformasCab}"
@@ -40,7 +40,7 @@
 				</p:column>
 
 				<p:column headerText="CLIENTE">
-					<h:outputText value="#{p.persona.cedula}" />
+					<h:outputText value="#{p.persona.nombre}" />
 				</p:column>
 
 				<p:column headerText="FECHA">
@@ -62,13 +62,19 @@
 				<p:column headerText="OPCIONES">
 					<p:commandButton title="Hacer cambios de proforma #{p.pfCabId}"
 						value="Editar" icon="pi pi-pencil"
-						actionListener="#{beanProVendededor.actionListenerActualizarEdicionProformasCab(p)}"
+						
+						
+						action="#{beanProVendededor.actionSeleccionarEdicionCabeceraProforma(p)}"
 						styleClass="rounded-button ui-button-secondary" />
 					<p:commandButton
 						title="Eliminar proforma #{p.pfCabId} de la lista de proformas"
-						 icon="pi pi-times"
-						actionListener="#{beanProVendededor.actionListenerEliminarProformasCab(p)}"
-						styleClass="rounded-button ui-button-danger ui-button-outlined" />
+						value="Eliminar" icon="pi pi-times"
+						 
+						actionListener="#{beanProVendededor.actionListenerEliminarProformaCab(p.pfCabId)}"
+						styleClass="rounded-button ui-button-danger ui-button-outlined" >
+						<p:confirm header="Confirmación"
+							message="Desea borrar esta orden" icon="pi pi-info-circle" />
+					</p:commandButton>
 					<p:commandButton
 						title="Listar productos de Proforma #{p.pfCabId}"
 						value="Productos" icon="pi pi-bookmark"
@@ -78,5 +84,12 @@
 			</p:dataTable>
 		</h:form>
 	</div>
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+		responsive="true" width="350">
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no ui-button-flat" />
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirmdialog-yes" />
+	</p:confirmDialog>
 </body>
 </html>

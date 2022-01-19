@@ -15,6 +15,7 @@ import minimarketdemo.model.core.entities.Persona;
 import minimarketdemo.model.core.entities.Producto;
 import minimarketdemo.model.core.entities.ProformaDet;
 import minimarketdemo.model.core.entities.ProformasCab;
+import minimarketdemo.model.core.entities.PryTarea;
 import minimarketdemo.model.core.entities.SegUsuario;
 import minimarketdemo.model.seguridades.managers.ManagerSeguridades;
 import minimarketdemo.model.ventas.managers.ManagerVentas;
@@ -63,8 +64,18 @@ public class BeanProVendededor implements Serializable {
 		nuevaProformasCab=mVentas.inicializarProformasCab();
 	}
 
+	//Cargamos pagina de nueva Cabecera
+	public String actionCargarProformaCabecera() {
+		listaProformasCab = mVentas.findAllProformasCabs();
+		
+		listaPersonas = mVentas.findAllPersonas();
+		nuevaProformasCab = mVentas.inicializarProformasCab();
+		
+		return "proformas_nuevo";
+	}
 	// ----------------Inserccion
 	//Agregar Proforma
+	
 	public void actionListenerInsertarProformasCab() {
 		try {
 			System.out.println("nueva proforma: "+nuevaProformasCab);
@@ -99,10 +110,10 @@ public class BeanProVendededor implements Serializable {
 		}
 	}
 	// Cargar pagina de Editar Proforma
-	public String actionSeleccionarEdicionProformasCab(ProformasCab proformasCab) {
-		edicionProformasCab=proformasCab;
-		return "proformasCab_edicion";
-	}
+//	public String actionSeleccionarEdicionProformasCab(ProformasCab proformasCab) {
+//		edicionProformasCab=proformasCab;
+//		return "proformasCab_edicion";
+//	}
 
 	
 	
@@ -152,6 +163,45 @@ public class BeanProVendededor implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public void actionListenerActualizarEdicionCabeceraProforma() {
+		try {
+			mVentas.actualizarProformasCab(beanSegLogin.getLoginDTO(),edicionProformasCab);
+			listaProformasCab=mVentas.findAllProformasCabs();
+			//listaPersonas=mVentas.findAllPersonas();
+			JSFUtil.crearMensajeINFO("Proforma cab actualizado.");
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
+	// Cargar pagina de Editar Cabecera
+	public String actionSeleccionarEdicionCabeceraProforma(ProformasCab proformaCab) {
+		edicionProformasCab = proformaCab;
+		listaProformasCab=mVentas.findAllProformasCabs();
+		
+		listaPersonas=mVentas.findAllPersonas();
+		
+		return "proforma_cabecera_edicion";
+	}
+	
+	
+	public void actionListenerEliminarProformaCab(int proformaId) {
+		try {
+			mVentas.eliminarProformasCab(proformaId);
+//			mVentas.eliminarOrden(ordenId);
+			listaProformasCab=mVentas.findAllProformasCabs();
+
+			JSFUtil.crearMensajeINFO("Proforma Cabecera eliminada.");
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR("Proforma no eliminada");
+			e.printStackTrace();
+		}
+	}
+	
 	
 	
 		public List<Persona> getListaPersonas() {

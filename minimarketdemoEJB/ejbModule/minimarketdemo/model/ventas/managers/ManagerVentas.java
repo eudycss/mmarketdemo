@@ -14,6 +14,8 @@ import minimarketdemo.model.core.entities.Persona;
 import minimarketdemo.model.core.entities.Producto;
 import minimarketdemo.model.core.entities.ProformaDet;
 import minimarketdemo.model.core.entities.ProformasCab;
+import minimarketdemo.model.core.entities.PryProyecto;
+import minimarketdemo.model.core.entities.PryTarea;
 import minimarketdemo.model.core.entities.SegUsuario;
 import minimarketdemo.model.core.managers.ManagerDAO;
 import minimarketdemo.model.seguridades.dtos.LoginDTO;
@@ -142,11 +144,31 @@ public class ManagerVentas {
 				"ProformasCab: " + nuevaProformasCab.getPfCabId() + " agregada con �xito");
 	}
 
+	
+	// Actualizacion de Ordenes
+//	public void actualizarOrden(LoginDTO loginDTO, OrdenTrabajo edicionOrden) throws Exception {
+//		OrdenTrabajo orden = (OrdenTrabajo) mDAO.findById(OrdenTrabajo.class, edicionOrden.getOrdenId()); // Buscar el cliente
+//		
+//		orden.setProformasCab(edicionOrden.getProformasCab());
+//		orden.setSegUsuario(edicionOrden.getSegUsuario());
+//		orden.setOrdenObservaciones(edicionOrden.getOrdenObservaciones());
+//		orden.setCliente(edicionOrden.getCliente());
+//		orden.setOrdenEstadopago(edicionOrden.getOrdenEstadopago());
+//		
+//		
+//		mDAO.actualizar(orden);
+//		mAuditoria.mostrarLog(loginDTO, getClass(), "actualizarOrden",
+//				"se actualiz� la orden " + edicionOrden.getOrdenId());
+//	}
+	
+	
+	
 	// Actualizacion de ProformasCab
 	public void actualizarProformasCab(LoginDTO loginDTO, ProformasCab edicionProformasCab) throws Exception {
 		ProformasCab proformasCab = (ProformasCab) mDAO.findById(ProformasCab.class, edicionProformasCab.getPfCabId()); // Buscar el cliente
 
 		proformasCab.setPersona(edicionProformasCab.getPersona());
+		proformasCab.setPfCabFecha(edicionProformasCab.getPfCabFecha());
 		
 		mDAO.actualizar(proformasCab);
 		mAuditoria.mostrarLog(loginDTO, getClass(), "actualizarProformasCab",
@@ -159,8 +181,8 @@ public class ManagerVentas {
 																										// cliente a
 																										// eliminar
 		//if (proformasCab.getProformaDets().size() > 0)
-		//	throw new Exception("No se puede elimininar la proforma porque tiene productos registrados.");
-		//mDAO.eliminar(ProformasCab.class, proformasCab.getPfCabId());
+		//throw new Exception("No se puede elimininar la proforma porque tiene productos registrados.");
+		mDAO.eliminar(ProformasCab.class, proformasCab.getPfCabId());
 		// TODO agregar uso de LoginDTO para auditar metodo.
 	}
 
@@ -253,6 +275,21 @@ public class ManagerVentas {
 			return precioT;
 		}
 		
+		 public void actualizarProformaDetalle(LoginDTO loginDTO, ProformaDet edicionproformaDet) throws Exception {
+		    	//mDAO.actualizar(edicionproformaDet);
+		    	ProformaDet proformaDet=(ProformaDet) mDAO.findById(ProformaDet.class, edicionproformaDet.getPfDetId());
+		    	//List<ProformaDet> listaProformaDetalle=findDetalleByProforma(proformaDet.getProformasCabs().getPfCabId());
+		    	//proformaDet.setProducto(edicionproformaDet.getProducto());
+		    	proformaDet.setPfDetCantidad(edicionproformaDet.getPfDetCantidad());
+		    	//proformaDet.setPfDetPrecio(edicionproformaDet.getPfDetPrecio());
+		     	mDAO.actualizar(proformaDet); 
+		    	//mAuditoria.mostrarLog(loginDTO, getClass(), "insertarProformasDet",	"Detalle: " + nuevaProformasDet.getPfDetId() + " agregada con �xito");
+		     	mAuditoria.mostrarLog(loginDTO, getClass(), "Actulizó", "actualizarProforma Det"+ edicionproformaDet.getPfDetId());
+						//"se actualizó El Detalle de la proforma " + edicionproformaDet.getProducto());
+		     	//mAuditoria.mostrarLog(LoginDTO, getClass(), "actualizarProforma Det",
+					//	"se actualizó El Detalle de la proforma " + edicionproformaDet.getProducto());
+		   
+		    }
 	
 
 }
