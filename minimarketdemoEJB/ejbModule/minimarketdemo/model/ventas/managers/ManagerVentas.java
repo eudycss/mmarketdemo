@@ -179,8 +179,8 @@ public class ManagerVentas {
 	public void eliminarProformasCab(int ProformasCabId) throws Exception {
 		ProformasCab proformasCab = (ProformasCab) mDAO.findById(ProformasCab.class, ProformasCabId); // Encontrar el
 																										// cliente a
-																										// eliminar
-		//if (proformasCab.getProformaDets().size() > 0)
+			BigDecimal sbt	= new BigDecimal(0)	;																					// eliminar
+		//if (proformasCab.getPfCabSubtototal().);
 		//throw new Exception("No se puede elimininar la proforma porque tiene productos registrados.");
 		mDAO.eliminar(ProformasCab.class, proformasCab.getPfCabId());
 		// TODO agregar uso de LoginDTO para auditar metodo.

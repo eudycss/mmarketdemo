@@ -13,6 +13,7 @@
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="#{beanProVendededor.cargarPaginaProformas()}" />
+	
 
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
@@ -22,6 +23,7 @@
 						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
 				</p:menuButton>
 			</f:facet>
+			
 		</p:menubar>
 	</h:form>
 
@@ -29,10 +31,16 @@
 	
 	
 	<p:staticMessage severity="info"
-	summary="AGREGAR PRODUCTO A PROFORMA #{beanProVendededor.proformaCabSeleccionada.pfCabId}">
-			</p:staticMessage>
+	summary=" Proforma para el/la cliente: #{beanProVendededor.proformaCabSeleccionada.persona.nombre}">
+		</p:staticMessage>
+					<div class="card">
+					
+    <p:commandButton value="Agregar Producto" type="button" icon="pi pi-external-link" onclick="PF('dlg3').show()"/>
+    </div>
+	
+ <p:dialog header="Header" widgetVar="dlg3" minHeight="40" width="350" showEffect="fade">
 	<h:form>
-			<p:panelGrid columns="2">
+			<p:panelGrid columns="2" >
 			
 			<h:outputText value="Producto:" />
 				<p:selectOneMenu
@@ -57,7 +65,11 @@
 					
 			</p:panelGrid>
 		</h:form>
-		
+		 <f:facet name="footer">
+        <p:commandButton type="button" value="No" styleClass="ui-button-flat p-mr-2" style="width: 6rem" />
+        <p:commandButton type="button" value="Yes" style="width: 5rem" />
+    </f:facet>
+</p:dialog>
 		
 		
 		
@@ -73,8 +85,11 @@
 					<h:outputText value="#{pd.pfDetId}" />
 				</p:column>
 
-				<p:column headerText="PRODUCTO">
+				<p:column headerText="IDPRODUCTO">
 					<h:outputText value="#{pd.producto.idProducto}" />
+				</p:column>
+				<p:column headerText="NOMBRE PRODUCTO">
+					<h:outputText value="#{pd.producto.nombreProducto}" />
 				</p:column>
 
 				<p:column headerText="CANTIDAD">

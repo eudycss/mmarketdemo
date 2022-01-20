@@ -21,7 +21,7 @@
 					<h:outputText value="Clave:" />
 					<p:password value="#{beanSegLogin.clave}" />
 					<p:commandButton value="Login"
-						action="#{beanSegLogin.actionLogin()}" icon="pi pi-key"></p:commandButton>
+						action="#{beanSegLogin.actionLogin()}" icon="pi pi-user-plus" class="ui-button-success"></p:commandButton>
 				</p:panelGrid>
 			</p:panel>
 		</h:form>
@@ -31,7 +31,7 @@
 					<h:outputText value="Inicializar datos" />
 					<p:commandButton value="Inicializar"
 						actionListener="#{beanSegLogin.actionListenerInicialiarDemo()}"
-						icon="pi pi-cog">
+						icon="pi pi-user-plus">
 						<p:confirm type="popup" header="Confirmation"
 							message="Desea inicializar datos?"
 							icon="pi pi-exclamation-triangle" />

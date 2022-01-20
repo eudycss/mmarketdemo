@@ -26,7 +26,27 @@
 			</f:facet>
 		</p:menubar>
 	</h:form>
+<p:panel>
+		<h:form>
+			<p:panelGrid columns="2">
+			
+					<h:outputText value="Cliente:" />
+				<p:selectOneMenu
+					value="#{beanProVendededor.personaSeleccionada}">
+					<f:selectItem itemLabel="Seleccione..." noSelectionOption="true" />
+					<f:selectItems value="#{beanProVendededor.listaPersonas}"
+						var="c" itemLabel="#{c.nombre}" itemValue="#{c.idPersona}">
+					</f:selectItems>
+				</p:selectOneMenu>
+				
+				
 
+				<p:commandButton value="Guardar" icon="pi pi-save" update="@form,:FormOrdenes"
+					actionListener="#{beanProVendededor.actionListenerInsertarProformasCab()}">
+					</p:commandButton>
+			</p:panelGrid>
+		</h:form>
+	</p:panel>
 	<div>
 		<p:staticMessage severity="info"
 			summary="LISTA DE PROFORMAS "></p:staticMessage>
@@ -37,6 +57,10 @@
 
 				<p:column headerText="ID" style="width:40px">
 					<h:outputText value="#{p.pfCabId}" />
+				</p:column>
+				
+				<p:column headerText="CI CLIENTE">
+					<h:outputText value="#{p.persona.cedula}" />
 				</p:column>
 
 				<p:column headerText="CLIENTE">
@@ -68,10 +92,10 @@
 						styleClass="rounded-button ui-button-secondary" />
 					<p:commandButton
 						title="Eliminar proforma #{p.pfCabId} de la lista de proformas"
-						value="Eliminar" icon="pi pi-times"
+						value="Eliminar" icon="pi pi-trash"
 						 
 						actionListener="#{beanProVendededor.actionListenerEliminarProformaCab(p.pfCabId)}"
-						styleClass="rounded-button ui-button-danger ui-button-outlined" >
+						styleClass="rounded-button ui-button-danger ui-button-outlined" update="FormOrdenes"> 
 						<p:confirm header="Confirmación"
 							message="Desea borrar esta orden" icon="pi pi-info-circle" />
 					</p:commandButton>

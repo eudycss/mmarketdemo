@@ -40,8 +40,10 @@
 			<p:dataTable value="#{beanSalVendededor.listaPersonas}" var="p"
 				paginator="true" rows="5">
 				
-				<p:column headerText="ID" style="width:50px" filterBy="#{p.idPersona}">
-					<h:outputText value="#{p.idPersona}" />
+				<p:column for="txt1" headerText="ID" style="width:50px" filterBy="#{p.idPersona}">
+					<h:outputText  value="#{p.idPersona}" required="true" label="Text 1" style="width: 12rem">
+					<f:validateLength minimum="2"/>
+					</h:outputText>
 				</p:column>
 				<p:column headerText="CEDULA" style="width:50px" filterBy="#{p.cedula}">
 					<h:outputText value="#{p.cedula}" />
@@ -92,6 +94,9 @@
 							message="Desea borrar este usuario?" icon="pi pi-info-circle" />
 					</p:commandButton>
 					
+					  <p:commandButton  styleClass="p-mr-2" />
+            <p:commandButton 
+                             value="Process:"/>
 				</p:column>
 			</p:dataTable>
 		</h:form>
