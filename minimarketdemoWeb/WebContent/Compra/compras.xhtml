@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Compras</title>
+</h:head>
+<body>
+
+	<div align="center">
+		<h:form id="form1">
+		<p:menubar>
+			<p:menuitem value="Regresar al Menu de Compras" icon="pi pi-home"
+				action="/menu?faces-redirect=true" />
+					<p:menuitem value="Historial de Compras" icon="pi pi-home"
+				action="historialdetransaccionescompra?faces-redirect=true" />
+		</p:menubar>	
+			<p:panelGrid columns="2" value="Establecer proveedor">
+				<h:outputText value="Cédula del proveedor:" />
+				<h:outputText value="#{beanCompraVenta.personaProv.cedula}" />
+				<h:outputText value="Nombre del proveedor elegido:" />
+				<h:outputText value="#{beanCompraVenta.personaProv.nombre}" />
+				<p:commandButton value="Registrar nuevo Proveedor" id="cmdNuevoProv"
+					update="@form,:form2" icon="pi pi-save">
+					<p:overlayPanel for="cmdNuevoProv" dynamic="true"
+						showCloseIcon="true">
+						<p:panel header="Nuevo Proveedor"
+							style="width:450px; margin: 0 auto ">
+							<p:panelGrid columns="2" style="margin: 0 auto">
+								<h:outputText value="Cédula del proveedor:" />
+								<h:inputText value="#{beanCompraVenta.personaProv.cedula}" />
+								<h:outputText value="Nombre del proveedor:" />
+								<h:inputText value="#{beanCompraVenta.personaProv.nombre}" />
+								<h:outputText value="Apellido del proveedor:" />
+								<h:inputText value="#{beanCompraVenta.personaProv.apellido}" />
+								<h:outputText value="Dirección del proveedor:" />
+								<h:inputText value="#{beanCompraVenta.personaProv.direccion}" />
+								<h:outputText value="Correo del proveedor:" />
+								<h:inputText value="#{beanCompraVenta.personaProv.correo}" />
+								<h:outputText value="Teléfono del proveedor:" />
+								<h:inputText value="#{beanCompraVenta.personaProv.telefono}" />
+								<h:outputText value="Marca del proveedor:" />
+								<h:inputText value="#{beanCompraVenta.proveedor.marcaProv}" />
+								<h:outputText value="Descripción del proveedor:" />
+								<h:inputText value="#{beanCompraVenta.proveedor.descripcion}" />
+							</p:panelGrid>
+							<p:commandButton value="Guardar proveedor"
+								actionListener="#{beanCompraVenta.InsertarProveedor()}"
+								update="@form,:form2" icon="pi pi-save" />
+						</p:panel>
+					</p:overlayPanel>
+				</p:commandButton>
+				<p:commandButton value="Buscar proveedor existente"
+					id="cmdBuscarProv" update="@form,:form2" icon="pi pi-save">
+					<p:overlayPanel for="cmdBuscarProv" dynamic="true"
+						showCloseIcon="true">
+						<p:panel header="Comprar" id="panelbusc"
+							style="width:450px; margin: 0 auto ">
+							<p:panelGrid columns="2" style="margin: 0 auto">
+								<h:outputText value="Cédula del proveedor:" />
+								<h:inputText value="#{beanCompraVenta.personaProv.cedula}" />
+								<h:outputText value="Nombre del proveedor:" />
+								<h:outputText value="#{beanCompraVenta.personaProv.nombre}" />
+								<h:outputText value="Apellido del proveedor:" />
+								<h:outputText value="#{beanCompraVenta.personaProv.apellido}" />
+								<h:outputText value="Dirección del proveedor:" />
+								<h:outputText value="#{beanCompraVenta.personaProv.direccion}" />
+								<h:outputText value="Correo del proveedor:" />
+								<h:outputText value="#{beanCompraVenta.personaProv.correo}" />
+								<h:outputText value="Teléfono del proveedor:" />
+								<h:outputText value="#{beanCompraVenta.personaProv.telefono}" />
+								<h:outputText value="Marca del proveedor:" />
+								<h:outputText value="#{beanCompraVenta.proveedor.marcaProv}" />
+								<h:outputText value="Descripción del proveedor:" />
+								<h:outputText value="#{beanCompraVenta.proveedor.descripcion}" />
+							</p:panelGrid>
+							<p:commandButton value="Buscar Proveedor"
+								actionListener="#{beanCompraVenta.findProveedorByCedula()}"
+								update="panelbusc" icon="pi pi-save" />
+							<p:commandButton value="Aceptar" update="@form,:form2"
+								icon="pi pi-save" />
+						</p:panel>
+					</p:overlayPanel>
+				</p:commandButton>
+				<p:commandButton value="Registrar nuevo Producto"
+					id="cmdInsertarProd" update="@form,:form2" icon="pi pi-save">
+					<p:overlayPanel for="cmdInsertarProd" dynamic="true"
+						showCloseIcon="true">
+						<p:panel header="Registrar Producto"
+							style="width:450px; margin: 0 auto ">
+							<p:panelGrid columns="2" style="margin: 0 auto">
+								<h:outputText value="Codigo del producto:" />
+								<h:inputText value="#{beanCompraVenta.newProducto.codProducto}" />
+								<h:outputText value="Categoría del producto:" />
+								<h:inputText value="#{beanCompraVenta.categoriaID}" />
+								<h:outputText value="Nombre del producto:" />
+								<h:inputText
+									value="#{beanCompraVenta.newProducto.nombreProducto}" />
+								<h:outputText value="Unidad de medida del producto:" />
+								<h:inputText value="#{beanCompraVenta.newProducto.unidaMedida}" />
+								<h:outputText value="Descripción del producto:" />
+								<h:inputText value="#{beanCompraVenta.newProducto.descripcion}" />
+								<h:outputText value="Stock Máximo:" />
+								<h:inputText value="#{beanCompraVenta.newStock.stockMaximo}" />
+								<h:outputText value="Stock Mínimo:" />
+								<h:inputText value="#{beanCompraVenta.newStock.stockMinimo}" />
+							</p:panelGrid>
+							<p:commandButton value="Almacenar Producto"
+								actionListener="#{beanCompraVenta.InsertarNuevoProducto()}"
+								update="@form,:form2" icon="pi pi-save" />
+						</p:panel>
+					</p:overlayPanel>
+				</p:commandButton>
+				<p:commandButton value="Ir al carrito de compras"
+					action="#{beanCompraVenta.IrAlCarrito}" update="@form,:form2"
+					icon="pi pi-save" />
+
+
+
+			</p:panelGrid>
+		</h:form>
+		<h:form id="form2">
+			<p:panel header="Información de productos existentes:"
+				toggleable="true" collapsed="false"
+				style="width:75%; margin: 0 auto ">
+				<p:dataTable class="table table-bordered table-striped"
+					value="#{beanCompraVenta.listaProductos}" var="prod"
+					paginator="true" rows="10">
+					<p:column headerText="ID" filterBy="#{prod.idProducto}"
+						filterMatchMode="contains">
+						<h:outputText value="#{prod.idProducto}" />
+					</p:column>
+					<p:column headerText="Código" filterBy="#{prod.codProducto}"
+						filterMatchMode="contains">
+						<h:outputText value="#{prod.codProducto}" />
+					</p:column>
+					<p:column headerText="Nombre" filterBy="#{prod.nombreProducto}"
+						filterMatchMode="contains">
+						<h:outputText value="#{prod.nombreProducto}" />
+					</p:column>
+					<p:column headerText="Descripción" filterBy="#{prod.codProducto}"
+						filterMatchMode="contains">
+						<h:outputText value="#{prod.descripcion}" />
+					</p:column>
+					<p:column headerText="Stock" filterMatchMode="contains">
+						<h:outputText
+							value="#{beanCompraVenta.getStockInfo(prod).cantidad}" />
+					</p:column>
+					<p:column headerText="Máxima cantidad" filterMatchMode="contains">
+						<h:outputText
+							value="#{beanCompraVenta.getStockInfo(prod).stockMaximo}" />
+					</p:column>
+
+					<p:column headerText="Comprar">
+						<p:commandButton id="cmdCompra" icon="pi pi-shopping-cart"
+							actionListener="#{beanCompraVenta.SetProductoCompra(prod)}" />
+						<p:overlayPanel for="cmdCompra" dynamic="true"
+							showCloseIcon="true">
+							<p:panel header="Comprar" style="width:450px; margin: 0 auto ">
+								<p:panelGrid columns="2" style="margin: 0 auto">
+									<h:outputText value="Cantidad: " />
+									<h:inputText value="#{beanCompraVenta.cantidad}" />
+									<h:outputText value="Precio Unitario: " />
+									<h:inputText value="#{beanCompraVenta.precioUnitario}" />
+								</p:panelGrid>
+								<p:commandButton value="Añadir al carrito"
+									actionListener="#{beanCompraVenta.AñadirAlCarrito()}"
+									update="@form,:form2" icon="pi pi-save" />
+							</p:panel>
+						</p:overlayPanel>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</div>
+</body>
+</html>

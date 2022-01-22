@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Carrito de ventas</title>
+</h:head>
+<body>
+
+	<div align="center">
+	<h:form id="form1">
+	<p:menubar>
+			<p:menuitem value="Regresar a Ventas" icon="pi pi-home"
+				action="ventas?faces-redirect=true" />
+		</p:menubar>	
+			<p:panelGrid columns="2" value="Información del cliente">
+				<h:outputText value="Cédula del cliente:" />
+				<h:outputText value="#{beanCompraVenta.personaCli.cedula}" />
+				<h:outputText value="Nombre del clienter:" />
+				<h:outputText value="#{beanCompraVenta.personaCli.nombre}" />
+				<h:outputText value="Apellido del cliente:" />
+				<h:outputText value="#{beanCompraVenta.personaCli.apellido}" />
+				<h:outputText value="Dirección del cliente:" />
+				<h:outputText value="#{beanCompraVenta.personaCli.direccion}" />
+				<h:outputText value="Correo del cliente:" />
+				<h:outputText value="#{beanCompraVenta.personaCli.correo}" />
+				<h:outputText value="Teléfono del cliente:" />
+				<h:outputText value="#{beanCompraVenta.personaCli.telefono}" />
+				<p:commandButton value="Regresar" action="#{beanCompraVenta.actionRegresarAvender}"
+					update="@form,:form2" icon="pi pi-caret-left" />
+				<p:commandButton value="Realizar Venta" actionListener="#{beanCompraVenta.actionFinalizarVenta()}"
+					update="@form,:form2" icon="pi pi-save" />
+			</p:panelGrid>
+		</h:form>
+		<h:form id="form2">
+			<p:panel header="Carrito de compra:" toggleable="true"
+				collapsed="false" style="width:75%; margin: 0 auto ">
+				<p:dataTable class="table table-bordered table-striped"
+					value="#{beanCompraVenta.carritoDeVentas}" var="sal"
+					paginator="true" rows="10">
+					<p:column headerText="ID del producto" filterBy="#{sal.producto.idProducto}"
+						filterMatchMode="contains">
+						<h:outputText value="#{sal.producto.idProducto}" />
+					</p:column>
+					<p:column headerText="Nombre del producto" filterBy="#{sal.producto.nombreProducto}"
+						filterMatchMode="contains">
+						<h:outputText value="#{sal.producto.nombreProducto}" />
+					</p:column>
+					<p:column headerText="Unidad de medida" filterBy="#{sal.producto.unidaMedida}"
+						filterMatchMode="contains">
+						<h:outputText value="#{sal.producto.unidaMedida}" />
+					</p:column>
+					<p:column headerText="Cantidad vendida" filterBy="#{sal.cantidadSalida}"
+						filterMatchMode="contains">
+						<h:outputText value="#{sal.cantidadSalida}" />
+					</p:column>
+					<p:column headerText="Precio Unitario" filterBy="#{sal.precioVenta}"
+						filterMatchMode="contains">
+						<h:outputText value="#{sal.precioVenta}" />
+					</p:column>
+					<p:column headerText="Valor Total" 
+						filterMatchMode="contains">
+						<h:outputText value="#{beanCompraVenta.actionCalcularValorFinal(sal)}" />
+					</p:column>
+					<p:column headerText="Eliminar del carrito">
+						<p:commandButton icon="pi pi-times"
+							actionListener="#{beanCompraVenta.EliminarDelCarritoVentas(sal)}" update="@form,:form2"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</div>
+</body>
+</html>

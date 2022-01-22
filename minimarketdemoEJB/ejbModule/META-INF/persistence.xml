@@ -4,10 +4,23 @@
 		<jta-data-source>java:/mmarketdemoDS</jta-data-source>
 		<class>minimarketdemo.model.core.entities.VwThmConsultaRol</class>
 		<class>minimarketdemo.model.core.entities.AudBitacora</class>
+		<class>minimarketdemo.model.core.entities.Cabecera</class>
+		<class>minimarketdemo.model.core.entities.Categoria</class>
+		<class>minimarketdemo.model.core.entities.ExaAlquiler</class>
+		<class>minimarketdemo.model.core.entities.ExaAlquilerDetalle</class>
+		<class>minimarketdemo.model.core.entities.ExaProducto</class>
+		<class>minimarketdemo.model.core.entities.Ingreso</class>
+		<class>minimarketdemo.model.core.entities.Persona</class>
+		<class>minimarketdemo.model.core.entities.Producto</class>
+		<class>minimarketdemo.model.core.entities.Proveedore</class>
+		<class>minimarketdemo.model.core.entities.PryProyecto</class>
+		<class>minimarketdemo.model.core.entities.PryTarea</class>
+		<class>minimarketdemo.model.core.entities.Salida</class>
 		<class>minimarketdemo.model.core.entities.SegAsignacion</class>
 		<class>minimarketdemo.model.core.entities.SegModulo</class>
 		<class>minimarketdemo.model.core.entities.SegPerfil</class>
 		<class>minimarketdemo.model.core.entities.SegUsuario</class>
+		<class>minimarketdemo.model.core.entities.Stock</class>
 		<class>minimarketdemo.model.core.entities.ThmCargo</class>
 		<class>minimarketdemo.model.core.entities.ThmEmpleado</class>
 		<class>minimarketdemo.model.core.entities.ThmRolCabecera</class>

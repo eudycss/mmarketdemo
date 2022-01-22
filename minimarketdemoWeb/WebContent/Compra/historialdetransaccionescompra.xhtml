@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Historial de compras</title>
+</h:head>
+<body>
+
+	<div align="center">
+		<h:form id="form1">	
+			<p:panel header="Seleccionar Cabecera:" toggleable="true"
+				collapsed="false" style="width:50%; margin: 0 auto ">
+				<p:dataTable class="table table-bordered table-striped"
+					value="#{beanCompraVenta.listaCabecerasIngresos}" var="ing"
+					paginator="true" rows="3">
+					<p:column headerText="ID de cabecera" filterBy="#{ing.idCabecera}"
+						filterMatchMode="contains">
+						<h:outputText value="#{ing.idCabecera}" />
+					</p:column>
+					<p:column headerText="Fecha de transacción"
+						filterBy="#{ing.fechaTransaccion}" filterMatchMode="contains">
+						<h:outputText value="#{ing.fechaTransaccion}" />
+					</p:column>
+					<p:column headerText="Costo de transacción"
+						filterMatchMode="contains">
+						<h:outputText value="#{ing.totalTransaccion}$" />
+					</p:column>
+					<p:column headerText="Seleccionar cabecera"
+						filterMatchMode="contains">
+						<p:commandButton value="Buscar Ingresos"
+							actionListener="#{beanCompraVenta.EstablecerCabeceraCompra(ing)}"
+							update="@form,:form2" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+		<h:form id="form2">
+			<p:panel header="Ingresos Asociados:" toggleable="true"
+				collapsed="false" style="width:80%; margin: 0 auto ">
+				<p:dataTable class="table table-bordered table-striped"
+					value="#{beanCompraVenta.cabeceraSeleccionada.ingresos}" var="val"
+					paginator="true" rows="10">
+					<p:column headerText="ID de ingreso" filterBy="#{val.idIngreso}"
+						filterMatchMode="contains">
+						<h:outputText value="#{val.idIngreso}" />
+					</p:column>
+					<p:column headerText="Código de producto"
+						filterBy="#{val.producto.codProducto}" filterMatchMode="contains">
+						<h:outputText value="#{val.producto.codProducto}" />
+					</p:column>
+					<p:column headerText="Nombre de producto"
+						filterBy="#{val.producto.nombreProducto}"
+						filterMatchMode="contains">
+						<h:outputText value="#{val.producto.nombreProducto}" />
+					</p:column>
+					<p:column headerText="Unidad"
+						filterBy="#{val.producto.unidaMedida}" filterMatchMode="contains">
+						<h:outputText value="#{val.producto.unidaMedida}" />
+					</p:column>
+					<p:column headerText="Cantidad" filterMatchMode="contains">
+						<h:outputText value="#{val.cantidadIngresos}" />
+					</p:column>
+					<p:column headerText="Precio de compra" filterMatchMode="contains">
+						<h:outputText value="#{val.precioCompra}" />
+					</p:column>
+					<p:column headerText="Marca del producto"
+						filterBy="#{val.proveedore.marcaProv}" filterMatchMode="contains">
+						<h:outputText value="#{val.proveedore.marcaProv}" />
+					</p:column>
+					<p:column headerText="Cédula del proveedor"
+						filterBy="#{val.proveedore.persona.cedula}"
+						filterMatchMode="contains">
+						<h:outputText value="#{val.proveedore.persona.cedula}" />
+					</p:column>
+					<p:column headerText="Nombre de proveedor"
+						filterBy="#{val.proveedore.persona.nombre}"
+						filterMatchMode="contains">
+						<h:outputText
+							value="#{val.proveedore.persona.nombre} #{val.proveedore.persona.apellido}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</div>
+</body>
+</html>
