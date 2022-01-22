@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head></h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu" />
+
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+		<p:staticMessage severity="info" summary="Vendedor"></p:staticMessage>
+	</h:form>
+	<div>
+		<h:form>
+			<p:panelGrid columns="2">
+				<h:outputText value="Cliente" />
+				<p:inputText
+				required="true" requiredMessage="Debe poner un nombre"/>
+				<h:outputText value="Fecha de entrega" />
+				<p:calendar  />
+				<h:outputText value="Fecha de emisión" />
+				<p:calendar/>
+				<p:commandButton value="Guardar" icon="pi pi-save" update="@form,:formTabla" />
+			</p:panelGrid>
+		</h:form>
+		<h:form id="formTabla">
+			<p:dataTable >
+				<p:column headerText="ID">
+				<h:outputText  />
+				</p:column>
+				<p:column headerText="Nombre">
+				<h:outputText  />
+				</p:column>
+				<p:column headerText="Fecha de inicio">
+				<h:outputText  />
+				</p:column>
+				<p:column headerText="Fecha fin">
+				<h:outputText  />
+				</p:column>
+				<p:column headerText="Estado">
+				<h:outputText  />
+				</p:column>
+				<p:column headerText="Avance">
+				<h:outputText  />
+				</p:column>
+				<p:column headerText="Opciones">
+				<p:commandButton title="Edit" icon="pi pi-pencil"/>
+				<p:commandButton title="Delete" icon="pi pi-times"/>
+				<p:commandButton value="Tareas" icon="pi pi-search"/>
+				
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</div>
+</body>
+</html>

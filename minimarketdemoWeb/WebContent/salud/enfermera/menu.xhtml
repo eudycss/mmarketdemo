@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head>
+	<title>Enfermera</title>
+</h:head>
+<body>
+<p:growl>
+<p:autoUpdate/>
+</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu" />
+			<p:menuitem value="Productos" icon="pi pi-briefcase" />
+			<p:menuitem value="Ingresos" icon="pi pi-step-forward" />
+			<p:menuitem value="Egressos" icon="pi pi-step-backward" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+		<p:staticMessage severity="info" summary="Enfermera"></p:staticMessage>
+	</h:form>
+	<div>
+	<h:form>
+	<h:outputText value="Ingrese el código del carnet" />
+	<p:inputText value="#{beanSalEnfermera.idSalCarnet}"></p:inputText>
+			<p:commandButton value="Validar" update="@form,:tabla"
+			 actionListener="#{beanSalEnfermera.actionListenerValidar()}"/>
+			
+	</h:form>
+		<h:form id="tabla">
+		
+			<p:dataTable value="#{beanSalEnfermera.listaCarnet}" var="c"
+				emptyMessage="Aun no hay registros">
+				<p:column headerText="ID">
+					<h:outputText value="#{c.idSalCarnet}" />
+				</p:column>
+				<p:column headerText="CEDULA">
+					<h:outputText value="#{c.cedulaEstudiante}" />
+				</p:column>
+				<p:column headerText="FECHA 1">
+					<h:outputText value="#{c.fecha1}" />
+				</p:column>
+				<p:column headerText="FECHA 2">
+					<h:outputText value="#{c.fecha2}" />
+				</p:column>
+				<p:column headerText="ESTADO">
+					<h:outputText value="#{c.verificado}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</div>
+</body>
+</html>

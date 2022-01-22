@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head></h:head>
+<body>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu"/>
+			<p:menuitem value="Stock" icon="pi pi-briefcase" action="stock" />
+			<p:menuitem value="Compras" icon="pi pi-briefcase"  />
+			<p:menuitem value="Nueva Orden" icon="pi pi-briefcase" />
+			
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user" buttonStyleClass="ui-button-outlined">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+
+	<div>
+		<p:staticMessage severity="info"
+			summary="LISTA DE STOCK"></p:staticMessage>
+			
+		<h:form id="FormOrdenes">
+			<p:dataTable
+				var="p">
+
+				<p:column headerText="ID STOCK" style="width:40px">
+					<h:outputText/>
+				</p:column>
+
+					<p:column headerText="ID PRODUCTO" style="width:40px">
+					<h:outputText />
+				</p:column>
+				
+				<p:column headerText="CANTIDDAD">
+					<h:outputText/>
+				</p:column>
+
+				<p:column headerText="STOCK MÍNIMO">
+					<h:outputText/>
+				</p:column>
+
+				 	<p:column headerText="STOCK MÁXIMO">
+					<h:outputText/>
+				</p:column>
+				
+				<p:column headerText="ESTADO DE PAGO">
+					<h:outputText  />
+				</p:column>
+
+				
+
+				<p:column headerText="ESTADO DE ORDEN">
+					<h:outputText />
+				</p:column>
+
+				<p:column headerText="OPCIONES">
+					<p:commandButton title="Hacer cambios de "
+						value="Editar" icon="pi pi-pencil"
+						actionListener=""
+						styleClass="rounded-button ui-button-secondary" />
+					<p:commandButton
+						title="Eliminar  de la lista de proveedores"
+						value="Eliminar" icon="pi pi-pencil"
+						actionListener=""
+						styleClass="rounded-button ui-button-danger" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</div>
+</body>
+</html>

@@ -36,6 +36,13 @@ public class Proveedore implements Serializable {
 	//bi-directional many-to-one association to Persona
 	@ManyToOne
 	@JoinColumn(name="id_persona")
+	//bi-directional many-to-one association to Producto
+	@OneToMany(mappedBy="proveedore")
+	private List<Producto> productos;
+
+	//bi-directional many-to-one association to Persona
+	@ManyToOne
+	@JoinColumn(name="id_persona", nullable=false)
 	private Persona persona;
 
 	public Proveedore() {

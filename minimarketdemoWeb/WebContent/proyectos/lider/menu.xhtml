@@ -16,6 +16,7 @@
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu" />
+
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">
@@ -69,6 +70,50 @@
 		</p:dataTable>
 		</h:form>
 		
+				<h:outputText value="Nombre del proyecto" />
+				<p:inputText value="#{beanPryLider.nuevoProyecto.nombre}"
+				required="true" requiredMessage="Debe poner un nombre"/>
+				<h:outputText value="Fecha de inicio" />
+				<p:calendar value="#{beanPryLider.nuevoProyecto.fechaInicio}" />
+				<h:outputText value="Fecha de Fin" />
+				<p:calendar value="#{beanPryLider.nuevoProyecto.fechaFin}"/>
+
+				<h:outputText value="Test git Brusil" />
+				<h:outputText value="Test git Brusil" />
+				<h:outputText value="Taller De GIT  Mipymes" />
+				
+				<p:commandButton value="Guardar" icon="pi pi-save" update="@form,:formTabla" actionListener="#{beanPryLider.actionListenerInsertarProyecto()}" />
+			</p:panelGrid>
+		</h:form>
+		<h:form id="formTabla">
+			<p:dataTable value="#{beanPryLider.listaProyectos}" var="p">
+
+				<p:column headerText="ID">
+				<h:outputText value="#{p.idPryProyecto}" />
+				</p:column>
+				<p:column headerText="Nombre">
+				<h:outputText value="#{p.nombre}" />
+				</p:column>
+				<p:column headerText="Fecha de inicio">
+				<h:outputText value="#{p.fechaInicio}" />
+				</p:column>
+				<p:column headerText="Fecha fin">
+				<h:outputText value="#{p.fechaFin}" />
+				</p:column>
+				<p:column headerText="Estado">
+				<h:outputText value="#{p.estado}" />
+				</p:column>
+				<p:column headerText="Avance">
+				<h:outputText value="#{p.avance}" />
+				</p:column>
+				<p:column headerText="Opciones">
+				<p:commandButton title="Edit" icon="pi pi-pencil"/>
+				<p:commandButton title="Delete" icon="pi pi-times"/>
+				<p:commandButton value="Tareas" icon="pi pi-search" action="#{beanPryLider.actionCargarTareas(p)}"/>
+				
+				</p:column>
+			</p:dataTable>
+		</h:form>
 	</div>
 </body>
 </html>

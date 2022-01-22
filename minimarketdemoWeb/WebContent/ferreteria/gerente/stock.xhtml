@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head>
+	<title>Personas</title>
+</h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<p:menuitem value="Nuevo persona" icon="pi pi-user-plus"
+				action="#{beanSalVendededor.actionCargarAgregarPersonas()}" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	
+	
+	<p:panel>
+	<p:staticMessage severity="info"
+			summary="LISTA DE PERSONA - Vendedor"></p:staticMessage>
+		<h:form>
+		
+			<p:dataTable value="#{beanSalVendededor.listaPersonas}" var="p"
+				paginator="true" rows="5">
+				
+				<p:column headerText="ID" style="width:50px" filterBy="#{p.idPersona}">
+					<h:outputText value="#{p.idPersona}" />
+				</p:column>
+				<p:column headerText="CEDULA" style="width:50px" filterBy="#{p.cedula}">
+					<h:outputText value="#{p.cedula}" />
+				</p:column>
+				
+				<p:column headerText="NOMBRES" filterBy="#{p.nombre}"
+					filterMatchMode="contains">
+					<h:outputText value="#{p.nombre}" />
+				</p:column>
+				<p:column headerText="APELLIDOS" filterBy="#{p.apellido}"
+					filterMatchMode="contains">
+					<h:outputText value="#{p.apellido}" />
+				</p:column>
+				
+					<p:column headerText="DIRECCION" filterBy="#{p.direccion}"
+					filterMatchMode="contains">
+					<h:outputText value="#{p.direccion}" />
+				</p:column>
+				<p:column headerText="TELEFONO" filterBy="#{p.telefono}"
+					filterMatchMode="contains">
+					<h:outputText value="#{p.telefono}" />
+				</p:column>
+				
+				<p:column headerText="CORREO" filterBy="#{p.correo}"
+					filterMatchMode="contains">
+					<h:outputText value="#{p.correo}" />
+				</p:column>
+				
+				
+				<p:column headerText="ESTADO" style="width:50px">
+					<h:outputText value="#{p.estadoPersona}" />
+				</p:column>
+				
+				<p:column headerText="OPCIONES">
+				
+					<p:commandButton icon="pi pi-check-circle"
+						title="activar/desactivar" styleClass="ui-button-warning"
+						update="@form"
+						actionListener="#{beanSalVendededor.actionListenerActivarDesactivarPersona(p.idPersona)}" />
+						
+					<p:commandButton icon="pi pi-pencil" title="Editar"
+						action="#{beanSalVendededor.actionSeleccionarEdicionPersona(p)}" />
+						
+					<p:commandButton icon="pi pi-times-circle" title="Eliminar"
+						styleClass="ui-button-danger" update="@form"
+						actionListener="#{beanSalVendededor.actionListenerEliminarPersona(p.idPersona)}">
+						<p:confirm header="Confirmación"
+							message="Desea borrar este usuario?" icon="pi pi-info-circle" />
+					</p:commandButton>
+					
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</p:panel>
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+		responsive="true" width="350">
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no ui-button-flat" />
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirmdialog-yes" />
+	</p:confirmDialog>
+</body>
+</html>

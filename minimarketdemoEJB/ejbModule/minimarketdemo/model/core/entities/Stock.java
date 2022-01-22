@@ -2,6 +2,7 @@ package minimarketdemo.model.core.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 
 /**
@@ -22,6 +23,9 @@ public class Stock implements Serializable {
 	@Column(nullable=false)
 	private Integer cantidad;
 
+	@Column(name="precio_venta", nullable=false, precision=131089)
+	private BigDecimal precioVenta;
+
 	@Column(name="stock_maximo", nullable=false)
 	private Integer stockMaximo;
 
@@ -30,7 +34,7 @@ public class Stock implements Serializable {
 
 	//bi-directional many-to-one association to Producto
 	@ManyToOne
-	@JoinColumn(name="id_producto")
+	@JoinColumn(name="id_producto", nullable=false)
 	private Producto producto;
 
 	public Stock() {
@@ -50,6 +54,14 @@ public class Stock implements Serializable {
 
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
+	}
+
+	public BigDecimal getPrecioVenta() {
+		return this.precioVenta;
+	}
+
+	public void setPrecioVenta(BigDecimal precioVenta) {
+		this.precioVenta = precioVenta;
 	}
 
 	public Integer getStockMaximo() {

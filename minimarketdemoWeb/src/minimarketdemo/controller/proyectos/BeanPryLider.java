@@ -23,6 +23,11 @@ public class BeanPryLider implements Serializable {
 	@EJB
 	private ManagerSeguridades mSeguridades;
     private PryProyecto nuevoProyecto;
+    @EJB
+    private ManagerProyectos mProyecto;
+    @EJB
+    private ManagerSeguridades mSeguridades;
+    private PryProyecto nuevoProyecto; // este hay que inicializarlo 
     private List<PryProyecto> listaProyectos;
     private List<PryTarea> listaTareas;
     private PryTarea nuevaTarea;
@@ -52,11 +57,40 @@ public class BeanPryLider implements Serializable {
 	}
 	public String actionCargarTareas(PryProyecto proyecto) {
 		listaTareas=mProyecto.findTareasByProyecto(proyecto.getIdPryProyecto());
+    private int idSegUsarioSeleccionado;
+    private PryProyecto proyectoSeleccionado;
+    
+	public BeanPryLider() {
+		// TODO Auto-generated constructor stub
+	}
+	@PostConstruct
+	//Inicializar para ver automaticamente en la pagina
+	public void inicializar() {
+		listaProyectos=mProyecto.findAllProyectos();
+		nuevoProyecto=mProyecto.inicializarProyecto();
+	}
+	
+	public void actionListenerInsertarProyecto() {
+		try {
+			mProyecto.insertarProyecto(nuevoProyecto);
+			JSFUtil.crearMensajeINFO("Proyecto creado");
+			listaProyectos=mProyecto.findAllProyectos();
+			//Cuando se guardar depues hay que limpiarlo
+			nuevoProyecto=mProyecto.inicializarProyecto();
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	public String actionCargarTareas(PryProyecto proyecto) {
+		listaTareas= mProyecto.findTareasByProyecto(proyecto.getIdPryProyecto());
 		nuevaTarea=mProyecto.inicializarTarea(proyecto);
 		listaUsuarios=mSeguridades.findAllUsuarios();
 		proyectoSeleccionado=proyecto;
 		return "tareas";
 	}
+<<<<<<< HEAD
 	public void actionListenerInsertarTarea() {
 		try {
 			mProyecto.insertarTarea(nuevaTarea, idSegUsuarioSeleccionado);
@@ -68,6 +102,26 @@ public class BeanPryLider implements Serializable {
 			e.printStackTrace();
 		}	
 	}
+=======
+	
+	//M�todo que guarda la tarea
+	public void actionListenerInsertarTarea() {
+		try {
+			mProyecto.insertarTarea(nuevaTarea, idSegUsarioSeleccionado);
+			JSFUtil.crearMensajeINFO("Tarea creada.");
+			listaTareas=mProyecto.findTareasByProyecto(proyectoSeleccionado.getIdPryProyecto());
+			
+			//Cuando se guardar depues hay que limpiarlo
+			nuevaTarea=mProyecto.inicializarTarea(proyectoSeleccionado);
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	//Para visualizar e intregrar en la vista hay que crear accesores,
+	//menos al manager porque es privado, para el funcionamiento interno del controlador
+>>>>>>> 727c903af50055b24c6b3aa8b95b773b94b16352
 	public PryProyecto getNuevoProyecto() {
 		return nuevoProyecto;
 	}
@@ -98,11 +152,20 @@ public class BeanPryLider implements Serializable {
 	public void setListaUsuarios(List<SegUsuario> listaUsuarios) {
 		this.listaUsuarios = listaUsuarios;
 	}
+<<<<<<< HEAD
 	public int getIdSegUsuarioSeleccionado() {
 		return idSegUsuarioSeleccionado;
 	}
 	public void setIdSegUsuarioSeleccionado(int idSegUsuarioSeleccionado) {
 		this.idSegUsuarioSeleccionado = idSegUsuarioSeleccionado;
+=======
+	
+	public int getIdSegUsarioSeleccionado() {
+		return idSegUsarioSeleccionado;
+	}
+	public void setIdSegUsarioSeleccionado(int idSegUsarioSeleccionado) {
+		this.idSegUsarioSeleccionado = idSegUsarioSeleccionado;
+>>>>>>> 727c903af50055b24c6b3aa8b95b773b94b16352
 	}
 	public PryProyecto getProyectoSeleccionado() {
 		return proyectoSeleccionado;
@@ -112,4 +175,9 @@ public class BeanPryLider implements Serializable {
 	}
 	
 	
+<<<<<<< HEAD
+=======
+	
+
+>>>>>>> 727c903af50055b24c6b3aa8b95b773b94b16352
 }

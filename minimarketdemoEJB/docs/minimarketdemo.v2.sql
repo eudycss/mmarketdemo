@@ -5,7 +5,14 @@
 -- Model Author: mrea@utn.edu.ec
 
 -- object: public.seg_usuario_id_seg_usuario_seq | type: SEQUENCE --
- DROP SEQUENCE IF EXISTS public.seg_usuario_id_seg_usuario_seq CASCADE;
+CREATE TABLE sal_carnet(
+id_sal_carnet serial primary key,
+cedula_estudiante varchar(10),
+fecha1 date,
+fecha2 date,
+verificado boolean
+);
+DROP SEQUENCE IF EXISTS public.seg_usuario_id_seg_usuario_seq CASCADE;
 CREATE SEQUENCE public.seg_usuario_id_seg_usuario_seq
 	INCREMENT BY 1
 	MINVALUE 1

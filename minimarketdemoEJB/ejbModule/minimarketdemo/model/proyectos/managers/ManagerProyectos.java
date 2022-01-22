@@ -5,6 +5,11 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+
+import javax.ejb.EJB;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+
 import minimarketdemo.model.core.entities.PryProyecto;
 import minimarketdemo.model.core.entities.PryTarea;
 import minimarketdemo.model.core.entities.SegUsuario;
@@ -72,6 +77,63 @@ public class ManagerProyectos {
 			
 	}
 	public void actualizarAvance(PryTarea Tarea) throws Exception {
+@EJB
+private ManagerDAO mDAO;
+    /**
+     * Default constructor. 
+     */
+    public ManagerProyectos() {
+       
+    }
+    
+    //funciones del lider de proyectos
+    public List <PryProyecto> findAllProyectos(){
+    	return  mDAO.findAll(PryProyecto.class);
+    }
+    //Metodo para guardar nuevos proyectos
+    public PryProyecto inicializarProyecto() {
+    	PryProyecto proyecto=new PryProyecto();
+    	proyecto.setAvance(0);
+    	proyecto.setEstado("I");
+    	proyecto.setFechaInicio(new Date());
+    	proyecto.setFechaFin(ModelUtil.addDays(new Date(), 30));
+    	return proyecto;
+    }
+    //Metodo que almacene la informaci�n
+    public void insertarProyecto(PryProyecto nuevoProyecto) throws Exception {
+    	mDAO.insertar(nuevoProyecto);
+    }
+    
+    public List<PryTarea> findTareasByProyecto(int idPryProyecto){
+    	return mDAO.findWhere(PryTarea.class,"o.pryProyecto.idPryProyecto="+idPryProyecto,"o.fechaInicio");
+    	
+    }
+    
+    public PryTarea inicializarTarea(PryProyecto proyecto) {
+    	PryTarea tarea= new PryTarea();
+    	tarea.setAvance(0);
+    	tarea.setFechaInicio(proyecto.getFechaInicio());
+    	tarea.setFechaFin(proyecto.getFechaFin());
+    	tarea.setPryProyecto(proyecto);
+    	return tarea;
+    }
+   
+    public void insertarTarea(PryTarea nuevaTarea,int idSegUsuario) throws Exception {
+    	SegUsuario usuario =(SegUsuario) mDAO.findById(SegUsuario.class, idSegUsuario);
+    	nuevaTarea.setSegUsuario(usuario);
+    	mDAO.insertar(nuevaTarea);
+    }
+    
+    //Funciones del Analista
+    public List<PryTarea> findTareasByUsuario(int idSegUsuario){
+		
+    	return mDAO.findWhere(PryTarea.class, "o.segUsuario.idSegUsuario="+idSegUsuario,"o.fechaInicio");
+    	
+    }
+    // Pasamos toda la tarea que viene desde la vista
+  
+    //Funciones Gerente
+    public void actualizarAvance(PryTarea Tarea) throws Exception {
     	mDAO.actualizar(Tarea);
     	List<PryTarea> listaTareas=findTareasByProyecto(Tarea.getPryProyecto().getIdPryProyecto());
     	int suma=0;
@@ -88,7 +150,6 @@ public class ManagerProyectos {
     	}
     	mDAO.actualizar(proyecto);
     }
-    
     public void actualizarEstado(PryProyecto nuevoEstado) throws Exception {
     	PryProyecto proyecto=(PryProyecto) mDAO.findById(PryProyecto.class, nuevoEstado.getIdPryProyecto());
     	String estado= nuevoEstado.getEstado();
