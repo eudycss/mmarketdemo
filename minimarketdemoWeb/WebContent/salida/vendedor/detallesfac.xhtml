@@ -8,24 +8,11 @@
 	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
 		type="preRenderView"></f:event>
 </f:metadata>
-<h:head>
-<style type="text/css">
-    .ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell {
-        text-align: center;
-    }
-
-    .customPanelGrid .ui-panelgrid-content {
-        align-items: center;
-    }
-</style>
-
-</h:head>
-
+<h:head></h:head>
 <body>
-
 	<h:form>
 		<p:menubar>
-			<p:menuitem value="Regresar" icon="pi pi-home" action="#{beanProVendededor.cargarPaginaProformas()}" />
+			<p:menuitem value="Regresar" icon="pi pi-home" action="#{beanProVendededor.cargarPaginaFacturas()}" />
 	
 
 			<f:facet name="options">
@@ -39,23 +26,22 @@
 			
 		</p:menubar>
 	</h:form>
-	
 					<div class="card">
-					
-    <p:commandButton value="Agregar Producto" type="button" icon="pi pi-external-link" onclick="PF('dlg3').show()"/>
-    </div>
+					<p:commandButton value="Agregar Producto" type="button" icon="pi pi-external-link" onclick="PF('dlg3').show()"/>
+					<p:commandButton value="Agregar Cliente" type="button" icon="pi pi-external-link" onclick="PF('cli').show()"/>
+    				</div>
+    				
+    				
 
 	<div>
-	
 	<p:staticMessage severity="info"
 	summary=" Datos cliente:"></p:staticMessage>
-	</div>
+	 </div>
 	
+	
+	<h:form id="cab">
 <div class="card" >
-
-
-
-	<h:panelGrid columns="2" cellpadding="7" for="cmdUpdateCab" dynamic="true">
+	<h:panelGrid columns="2" cellpadding="7">
 	 <h:outputLabel for="Nombre" value="Nombre: "/>
 	 <h:outputLabel for="Nombre" value="#{beanProVendededor.proformaCabSeleccionada.persona.nombre} #{beanProVendededor.proformaCabSeleccionada.persona.apellido}"/>
 		
@@ -70,14 +56,11 @@
 	
 	<h:outputLabel for="Cedula" value="Direccón "/>
 	<h:outputLabel for="Cédula"  value="#{beanProVendededor.proformaCabSeleccionada.persona.telefono}"/>
-	
-	<h:outputLabel for="Total a pagar" value="Total"/>
-	<h:outputLabel for="Total a pagar"  value="#{beanProVendededor.proformaCabSeleccionada.pfCabTotal}"/>
 	   </h:panelGrid>
 
 	</div>
 	
-	
+		</h:form>
 	
 	
  <p:dialog header="Header" widgetVar="dlg3" minHeight="40" width="350" showEffect="fade">
@@ -99,7 +82,7 @@
 				</p:spinner>
 				
 				 
-				<p:commandButton value="Insertar" icon="pi pi-save" id="cmdUpdateCab"
+				<p:commandButton value="Insertar" icon="pi pi-save"
 					update="@form,:formDetalles"
 					action="#{beanProVendededor.actionListenerInsertarProformaDet()}"
 					styleClass="ui-button-raised ui-button-success">
@@ -112,14 +95,40 @@
         <p:commandButton type="button" value="Yes" style="width: 5rem" />
     </f:facet>
 </p:dialog>
+
+<p:dialog header="Header" widgetVar="cli" minHeight="40" width="350" showEffect="fade">
+	<h:form>
+			<p:panelGrid columns="2" >
+			
+				<p:selectOneMenu
+					value="#{beanProVendededor.personaSeleccionada}">
+					<f:selectItem itemLabel="Seleccione..." noSelectionOption="true" />
+					<f:selectItems value="#{beanProVendededor.listaPersonas}"
+						var="c" itemLabel="#{c.nombre}" itemValue="#{c.idPersona}">
+					</f:selectItems>
+				</p:selectOneMenu>
+				
+				
+
+				<p:commandButton value="Guardar" icon="pi pi-save" 
+					actionListener="#{beanProVendededor.actionListenerInsertarProformasCab()}">
+					</p:commandButton>
+					
+			</p:panelGrid>
+		</h:form>
+		 <f:facet name="footer">
+        <p:commandButton type="button" value="No" styleClass="ui-button-flat p-mr-2" style="width: 6rem" />
+        <p:commandButton type="button" value="Yes" style="width: 5rem" />
+    </f:facet>
+</p:dialog>
+
+
 		<p:staticMessage severity="info"
-			summary="LISTA DE DETALLES DE PROFORMA #{beanProVendededor.proformaCabSeleccionada.pfCabId} - ADMINISTRADOR"></p:staticMessage>
+			summary="LISTA DE PrODUCTOS #{beanProVendededor.proformaCabSeleccionada.pfCabId} - ADMINISTRADOR"></p:staticMessage>
 
 		<h:form id="formDetalles">
-			
 			<p:dataTable value="#{beanProVendededor.listaProformasDet}"
 				var="pd">
-			
 
 				<p:column headerText="ID" style="width:40px">
 					<h:outputText value="#{pd.pfDetId}" />

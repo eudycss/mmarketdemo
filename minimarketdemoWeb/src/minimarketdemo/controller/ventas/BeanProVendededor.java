@@ -45,9 +45,11 @@ public class BeanProVendededor implements Serializable {
 	// Variables ProformasDet
 	private ProformasCab proformaCabSeleccionada;
 	private int productoSeleccionado;
+	private int profSeleccionado;
 	
 	private ProformaDet nuevaProformaDet;
 	private ProformaDet edicionProformaDet;
+	
 	
 	@Inject
 	private BeanSegLogin beanSegLogin;
@@ -143,25 +145,53 @@ public class BeanProVendededor implements Serializable {
 			return "detalles?faces-redirect=true";
 		}
 		
+
+		//----------------------------- PROFORMAS-DETALLE---------------------------------------------------------------------
+		// Cargar pagina de ingreso de Proformas Detalle
+		
+			public String actionCargarProformasDetFac(ProformasCab proformaCab) {
+				listaProductos=mVentas.findAllProductos();
+				proformaCabSeleccionada=proformaCab;
+				listaProformasDet=mVentas.findDetalleByProforma(proformaCabSeleccionada.getPfCabId());
+				nuevaProformaDet=mVentas.inicializarProformasDet(proformaCabSeleccionada);
+				return "detallesfac?faces-redirect=true";
+			}
+			
 		//Actualizar lista del boton Regresar
 		public String cargarPaginaProformas() {
 			listaProformasCab=mVentas.findAllProformasCabs();
 			return "proformas";
 		}
 		
+		//Actualizar lista del boton Regresar
+				public String cargarPaginaDetalle() {
+					listaProformasDet=mVentas.findDetalleByProforma(profSeleccionado);
+					return "detallesfac?faces-redirect=true";
+				}
+		
+		//Actualizar lista del boton Regresar
+		public String cargarPaginaFacturas() {
+			listaProformasCab=mVentas.findAllProformasCabs();
+			return "facturas1";
+		}
+		
 	// ----------------Inserccion
 	// Agregar
 		
-	public void actionListenerInsertarProformaDet() {
+	public String actionListenerInsertarProformaDet() {
 		try {
 			mVentas.insertarProformasDet(beanSegLogin.getLoginDTO(), nuevaProformaDet,productoSeleccionado);
 			JSFUtil.crearMensajeINFO("Detalle agregado agregada con �xito");
 			nuevaProformaDet=mVentas.inicializarProformasDet(proformaCabSeleccionada);
 			listaProformasDet=mVentas.findDetalleByProforma(proformaCabSeleccionada.getPfCabId());
+			
+			
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
 			e.printStackTrace();
 		}
+		
+		return "detallesfac?faces-redirect=true";
 	}
 	
 	
@@ -308,6 +338,15 @@ public class BeanProVendededor implements Serializable {
 		this.listaProductos = listaProductos;
 	}
 
+	public int getProfSeleccionado() {
+		return profSeleccionado;
+	}
+
+	public void setProfSeleccionado(int profSeleccionado) {
+		this.profSeleccionado = profSeleccionado;
+	}
+
+	
 	// ACCESORES
 
 

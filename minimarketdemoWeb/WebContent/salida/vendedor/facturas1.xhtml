@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head></h:head>
+<body>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="facturas" />
+			<p:menuitem value="Nueva Factura" icon="pi pi-briefcase"
+				action="#{beanProVendededor.actionCargarProformaCabecera()}" />
+
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user" buttonStyleClass="ui-button-outlined">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+<p:panel>
+		<h:form>
+			<p:panelGrid columns="2">
+			
+					<h:outputText value="Cliente:" />
+				<p:selectOneMenu
+					value="#{beanProVendededor.personaSeleccionada}">
+					<f:selectItem itemLabel="Seleccione..." noSelectionOption="true" />
+					<f:selectItems value="#{beanProVendededor.listaPersonas}"
+						var="c" itemLabel="#{c.nombre}" itemValue="#{c.idPersona}">
+					</f:selectItems>
+					
+				</p:selectOneMenu>
+				<p:commandButton value="Guardar" icon="pi pi-save" update="@form,:FormOrdenes"
+					actionListener="#{beanProVendededor.actionListenerInsertarProformasCab()}">
+					</p:commandButton>
+					
+			</p:panelGrid>
+		</h:form>
+	</p:panel>
+	<div id="cab">
+		<p:panelGrid columns="2" cellpadding="7"> 
+	 <h:outputLabel for="Nombre" value="Nombre: "/>
+	 <h:outputLabel for="Nombre" value="#{beanProVendededor.proformaCabSeleccionada.persona.nombre} #{beanProVendededor.proformaCabSeleccionada.persona.apellido}"/>
+		
+	<h:outputLabel for="Cedula" value="Cédula "/>
+	<h:outputLabel for="Cédula"  value="#{beanProVendededor.proformaCabSeleccionada.persona.cedula}"/>
+	
+	<h:outputLabel for="Cedula" value="Email "/>
+	<h:outputLabel for="Cédula"  value="#{beanProVendededor.proformaCabSeleccionada.persona.correo}"/>
+	
+	<h:outputLabel for="Cedula" value="Direccón "/>
+	<h:outputLabel for="Cédula"  value="#{beanProVendededor.proformaCabSeleccionada.persona.direccion}"/>
+	
+	<h:outputLabel for="Cedula" value="Direccón "/>
+	<h:outputLabel for="Cédula"  value="#{beanProVendededor.proformaCabSeleccionada.persona.telefono}"/>
+	   </p:panelGrid>
+	
+	</div>
+<!-- <div>
+
+	<h:form id="tt">
+			  <p:panelGrid value="#{beanProVendededor.listaProformasCab}" var="t">
+			  <h:outputText value="#{t.pfCabTotal}" />
+			  	<p:commandButton value="select" icon="pi pi-save" update="tt">
+					</p:commandButton>
+			  </p:panelGrid>
+	</h:form>
+</div> -->
+	
+	<div>
+			
+		<p:staticMessage severity="info"
+			summary="LISTA DE PROFORMAS F "></p:staticMessage>
+			
+		<h:form id="FormOrdenes">
+			<p:dataTable value="#{beanProVendededor.listaProformasCab}"
+				var="p">
+
+				<p:column headerText="ID" style="width:40px">
+					<h:outputText value="#{p.pfCabId}" />
+				</p:column>
+				
+				<p:column headerText="CI CLIENTE">
+					<h:outputText value="#{p.persona.cedula}" />
+				</p:column>
+
+				<p:column headerText="CLIENTE">
+					<h:outputText value="#{p.persona.nombre}" />
+				</p:column>
+
+				<p:column headerText="FECHA">
+					<h:outputText value="#{p.pfCabFecha}" />
+				</p:column>
+
+				<p:column headerText="SUBTOTAL">
+					<h:outputText value="#{p.pfCabSubtototal}" />
+				</p:column>
+
+				<p:column headerText="IVA">
+					<h:outputText value="#{p.pfCabIva}" />
+				</p:column>
+
+				<p:column headerText="TOTAL">
+					<h:outputText value="#{p.pfCabTotal}" />
+				</p:column>
+
+				<p:column headerText="OPCIONES">
+					<p:commandButton title="Hacer cambios de proforma #{p.pfCabId}"
+						value="Editar" icon="pi pi-pencil"
+						
+						
+						action="#{beanProVendededor.actionSeleccionarEdicionCabeceraProforma(p)}"
+						styleClass="rounded-button ui-button-secondary" />
+					<p:commandButton
+						title="Eliminar proforma #{p.pfCabId} de la lista de proformas"
+						value="Eliminar" icon="pi pi-trash"
+						 
+						actionListener="#{beanProVendededor.actionListenerEliminarProformaCab(p.pfCabId)}"
+						styleClass="rounded-button ui-button-danger ui-button-outlined" update="FormOrdenes"> 
+						<p:confirm header="Confirmación"
+							message="Desea borrar esta orden" icon="pi pi-info-circle" />
+					</p:commandButton>
+					<p:commandButton
+						title="Listar productos de Proforma #{p.pfCabId}"
+						value="Productos" icon="pi pi-bookmark"
+						action="#{beanProVendededor.actionCargarProformasDetFac(p)}"
+						styleClass="ui-button-raised ui-button-success" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</div>
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+		responsive="true" width="350">
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no ui-button-flat" />
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirmdialog-yes" />
+	</p:confirmDialog>
+</body>
+</html>
