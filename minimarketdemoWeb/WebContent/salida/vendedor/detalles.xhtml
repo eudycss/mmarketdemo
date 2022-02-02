@@ -65,21 +65,38 @@
 	<h:outputLabel for="Cedula" value="Email "/>
 	<h:outputLabel for="Cédula"  value="#{beanProVendededor.proformaCabSeleccionada.persona.correo}"/>
 	
-	<h:outputLabel for="Cedula" value="Direccón "/>
+	<h:outputLabel for="Cedula" value="Dirección "/>
 	<h:outputLabel for="Cédula"  value="#{beanProVendededor.proformaCabSeleccionada.persona.direccion}"/>
 	
-	<h:outputLabel for="Cedula" value="Direccón "/>
+	<h:outputLabel for="Cedula" value="Teléfono "/>
 	<h:outputLabel for="Cédula"  value="#{beanProVendededor.proformaCabSeleccionada.persona.telefono}"/>
 	
-	<h:outputLabel for="Total a pagar" value="Total"/>
-	<h:outputLabel for="Total a pagar"  value="#{beanProVendededor.proformaCabSeleccionada.pfCabTotal}"/>
+	
 	   </h:panelGrid>
 
 	</div>
 	
 	
-	
-	
+	<div class="card">
+    <p:staticMessage severity="info"
+	summary=" Valor a cancelar:"></p:staticMessage>
+    <p:panelGrid columns="2">
+        <f:facet name="header">
+             <h:outputText value="Valor a cancelar:"/>
+        </f:facet>
+
+        <h:outputText value="Subtotal:"/>
+        <h:outputText value="#{beanProVendededor.proformaCabSeleccionada.pfCabSubtototal}"/>
+
+        <h:outputText value="Iva:"/>
+        <h:outputText value="#{beanProVendededor.proformaCabSeleccionada.pfCabIva}"/>
+
+        <h:outputText value="Total:"/>
+        <h:outputText value="#{beanProVendededor.proformaCabSeleccionada.pfCabTotal}"/>
+
+      
+    </p:panelGrid>
+</div>
  <p:dialog header="Header" widgetVar="dlg3" minHeight="40" width="350" showEffect="fade">
 	<h:form>
 			<p:panelGrid columns="2" >
@@ -99,7 +116,7 @@
 				</p:spinner>
 				
 				 
-				<p:commandButton value="Insertar" icon="pi pi-save" id="cmdUpdateCab"
+				<p:commandButton value="Insertar" icon="pi pi-save" 
 					update="@form,:formDetalles"
 					action="#{beanProVendededor.actionListenerInsertarProformaDet()}"
 					styleClass="ui-button-raised ui-button-success">
@@ -113,7 +130,7 @@
     </f:facet>
 </p:dialog>
 		<p:staticMessage severity="info"
-			summary="LISTA DE DETALLES DE PROFORMA #{beanProVendededor.proformaCabSeleccionada.pfCabId} - ADMINISTRADOR"></p:staticMessage>
+			summary="LISTA DE DETALLES DE PROFORMA #{beanProVendededor.proformaCabSeleccionada.pfCabId} - Vendedor"></p:staticMessage>
 
 		<h:form id="formDetalles">
 			

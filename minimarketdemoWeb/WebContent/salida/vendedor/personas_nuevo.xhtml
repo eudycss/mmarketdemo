@@ -35,7 +35,17 @@
 			
 					<h:outputText value="Cédula:" />
 				<p:inputText value="#{beanSalVendededor.nuevaPersona.cedula}"
-					required="true" requiredMessage="Ingrese los nombres" />
+					required="true" requiredMessage="Ingrese cedula" 
+					 
+				 validatorMessage="Cédual incorrecta">
+				
+				<f:validateRegex
+				pattern ="(([0][1-9])|([1][0-9])|([2][0-4]))([0-9]{8})$"/>
+				</p:inputText>
+	           	
+		
+		<p:watermark for="email" value="Email Address *" />
+	<p:message for="email" />
 					
 				
 					<h:outputText value="Nombres:" />
@@ -54,8 +64,18 @@
 					required="true" requiredMessage="Ingrese el telefono" />
 
 				<h:outputText value="Correo:" />
-				<p:inputText value="#{beanSalVendededor.nuevaPersona.correo}"
-					required="true" requiredMessage="Ingrese el correo" />
+				<p:inputText id="email" value="#{beanSalVendededor.nuevaPersona.correo}" label="email" size="40"
+				required="true"
+				 requiredMessage="Ingrese el correo" 
+				 validatorMessage="Invalid email format">
+				
+				<f:validateRegex
+				pattern ="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+				</p:inputText>
+	           	
+		
+		<p:watermark for="email" value="Email Address *" />
+	<p:message for="email" />
 					
 			
 					

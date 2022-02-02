@@ -18,8 +18,11 @@
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			
 			<p:menuitem value="Nuevo persona" icon="pi pi-user-plus"
 				action="#{beanSalVendededor.actionCargarAgregarPersonas()}" />
+				<p:menuitem value="Reporte" icon="pi pi-book" ajax="false" 
+				action="#{beanSalVendededor.actionReporte()}" />
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">

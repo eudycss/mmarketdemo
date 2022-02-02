@@ -154,7 +154,7 @@ public class BeanProVendededor implements Serializable {
 				proformaCabSeleccionada=proformaCab;
 				listaProformasDet=mVentas.findDetalleByProforma(proformaCabSeleccionada.getPfCabId());
 				nuevaProformaDet=mVentas.inicializarProformasDet(proformaCabSeleccionada);
-				return "detallesfac?faces-redirect=true";
+				return "detalles?faces-redirect=true";
 			}
 			
 		//Actualizar lista del boton Regresar
@@ -166,7 +166,7 @@ public class BeanProVendededor implements Serializable {
 		//Actualizar lista del boton Regresar
 				public String cargarPaginaDetalle() {
 					listaProformasDet=mVentas.findDetalleByProforma(profSeleccionado);
-					return "detallesfac?faces-redirect=true";
+					return "detalles?faces-redirect=true";
 				}
 		
 		//Actualizar lista del boton Regresar
@@ -191,7 +191,7 @@ public class BeanProVendededor implements Serializable {
 			e.printStackTrace();
 		}
 		
-		return "detallesfac?faces-redirect=true";
+		return "detalles?faces-redirect=true";
 	}
 	
 	

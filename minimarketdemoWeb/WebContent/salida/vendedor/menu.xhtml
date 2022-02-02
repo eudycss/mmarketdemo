@@ -4,79 +4,265 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-<f:metadata>
-	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
-		type="preRenderView"></f:event>
-</f:metadata>
-<h:head></h:head>
+
+<h:head>
+</h:head>
 <body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+
 	<h:form>
 		<p:menubar>
-			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu" />
-			<p:menuitem value="Personas" icon="pi pi-briefcase" action="personas" />
-			<p:menuitem value="Proformas" icon="pi pi-briefcase" action="proformas" />
-			<p:menuitem value="Facturas" icon="pi pi-briefcase" action="facturas1" />
-			
-			<f:facet name="options">
-				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
-					icon="pi pi-user" buttonStyleClass="ui-button-outlined">
-					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
-					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
-						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
-				</p:menuButton>
-			</f:facet>
+			<p:menuitem value="Regresar" icon="pi pi-home"
+				action="/menu?faces-redirect=true" />
+			<p:menuitem value="Reporte" icon="pi pi-briefcase"
+				action="proveedores?faces-redirect=true" />
 		</p:menubar>
 	</h:form>
 
-	<div>
-		<p:staticMessage severity="info"
-			summary="LISTA DE ORDENES - ADMINISTRADOR"></p:staticMessage>
+
+	<h:panelGroup>
+		<div>
+			<div>
+
+
 			
-		<h:form id="FormOrdenes">
-			<p:dataTable value="#{beanCompAdministrador.listaProveedores}"
-				var="p">
+				<p:tabView>
+					
+					<p:tab title="LISTA DE PROFORMAS">
 
-				<p:column headerText="ID" style="width:40px">
-					<h:outputText value="#{p.proveId}" />
-				</p:column>
+						<p class="p-m-0">
+							<p:panel header="Lista DE Proformas" style="width:1450px"
+								collapsed="false">
+								
+									<p:outputPanel>
+										<p:dataTable styleClass="tableCompras"
+											value="#{beanComprador.listaProformasCabs}" var="p">
 
-				<p:column headerText="PROFORMA">
-					<h:outputText value="#{p.proveRuc}" />
-				</p:column>
+											<p:column headerText="ID" style="width:40px">
+												<h:outputText value="#{p.pfCabId}" />
+											</p:column>
 
-				<p:column headerText="OBSERVACION">
-					<h:outputText value="#{p.proveNombre}" />
-				</p:column>
 
-				<p:column headerText="ESTADO DE PAGO">
-					<h:outputText value="#{p.proveNomcomercial}" />
-				</p:column>
 
-				<p:column headerText="FECHA INICIO">
-					<h:outputText value="#{p.proveDireccion}" />
-				</p:column>
+											<p:column headerText="FECHA">
+												<h:outputText value="#{p.pfCabFecha}" />
+											</p:column>
 
-				<p:column headerText="FECHA FIN">
-					<h:outputText value="#{p.proveTelefono}" />
-				</p:column>
+											<p:column headerText="PERSONA">
+												<h:outputText value="#{p.persona.nombre}" />
+											</p:column>
 
-				<p:column headerText="ESTADO DE ORDEN">
-					<h:outputText value="#{p.ciudad.ciuNombre}" />
-				</p:column>
 
-				<p:column headerText="OPCIONES">
-					<p:commandButton title="Hacer cambios de #{p.proveNomcomercial}"
-						value="Editar" icon="pi pi-pencil"
-						actionListener="#{beanCompAdministrador.actionListenerActualizarProveedor(p)}"
-						styleClass="rounded-button ui-button-secondary" />
-					<p:commandButton
-						title="Eliminar #{p.proveNomcomercial} de la lista de proveedores"
-						value="Eliminar" icon="pi pi-pencil"
-						actionListener="#{beanCompAdministrador.actionListenerEliminarProveedor(p)}"
-						styleClass="rounded-button ui-button-danger" />
-				</p:column>
-			</p:dataTable>
-		</h:form>
-	</div>
+
+											<p:column headerText="SUBTOTAL">
+												<h:outputText value="#{p.pfCabSubtototal}" />
+											</p:column>
+
+											<p:column headerText="IVA">
+												<h:outputText value="#{p.pfCabIva}" />
+											</p:column>
+
+											<p:column headerText="TOTAL A PAGAR">
+												<h:outputText value="#{p.pfCabTotal}" />
+											</p:column>
+
+											<p:column headerText="OPCIONES">
+												<p:commandButton
+													title="Eliminar proforma #{p.pfCabId} de la lista de proformas"
+													value="Eliminar" icon="pi pi-trash"
+													actionListener="#{beanComprador.actionListenerEliminarProformaCab1(p.pfCabId)}"
+													styleClass="rounded-button ui-button-danger ui-button-outlined" update="@(.tableCompras)">
+													<p:confirm header="Confirmación" 
+														message="Desea borrar esta orden" icon="pi pi-info-circle" />
+												</p:commandButton>
+
+											</p:column>
+										</p:dataTable>
+
+									</p:outputPanel>
+
+								
+							</p:panel>
+						</p>
+					</p:tab>
+
+				
+
+
+
+
+
+
+					<p:tab title="NUEVA PROFORMA">
+						<h:form>
+							<h:panelGrid columns="2">
+
+								<h:panelGrid columns="2">
+
+									<h:panelGrid columns="1">
+
+										<h3 align="center">DATOS PRINCIPALES</h3>
+										<p:panelGrid columns="2" columnClasses="ui-state-hover"
+											style="width:30px; height:20px; " border="0">
+
+
+
+
+
+											<h:outputText value="Cliente"
+												styleClass="p-text-bold p-d-block" />
+											<p:selectOneMenu value="#{beanComprador.personaIngreso}"
+												panelStyle="width:150px" effect="fade" filter="true"
+												filterMatchMode="startsWith">
+												<f:selectItems value="#{beanComprador.listaPersonas}"
+													var="c" itemLabel="#{c.nombre} #{c.apellido}"
+													itemValue="#{c.idPersona}" itemDisabled="false" />
+												<p:column style="width:20%">
+													<f:facet name="header">
+														<h:outputText value="ID" />
+													</f:facet>
+													<!-- <h:outputText value="#{beanComprador.listaPersonas}" /> -->
+												</p:column>
+
+												<p:column>
+													<f:facet name="header">
+														<h:outputText value="PROVEEDOR" />
+													</f:facet>
+
+													<!--  <h:outputText value="#{c.contacto}" />-->
+												</p:column>
+												<f:facet name="footer">
+													<h:outputText
+														value="#{beanComprador.listaPersonas.size()} Clientes"
+														style="font-weight:bold;" styleClass="p-py-1 p-d-block" />
+												</f:facet>
+											</p:selectOneMenu>
+
+											<h:outputText value="Fecha:" />
+											<p:calendar value="#{beanComprador.fechaIngreso}"
+												style="width:30px; height:20px; " />
+
+											<!-- <h:outputText value="Descuento:" />
+											<p:spinner value="#{beanComprador.cantidadIngreso}" min="0"
+												max="100" />
+
+											<h:outputText value="Iva:" />
+											<p:spinner value="#{beanComprador.cantidadIngreso}" min="0"
+												max="100" />
+										 -->
+										</p:panelGrid>
+									</h:panelGrid>
+
+
+									<h:panelGrid columns="1" columnClasses="centered">
+										<h3 align="center">DETALLE</h3>
+										<p:panelGrid columns="2" columnClasses="ui-state-hover"
+											style="width:30px; height:20px; " border="0">
+
+											<h:outputText value="Productos" />
+											<p:selectOneMenu style="width:200px; height:40px;"
+												value="#{beanComprador.productoIngreso}"
+												panelStyle="width:150px" effect="fade" filter="true"
+												filterMatchMode="startsWith">
+												<f:selectItems value="#{beanComprador.listaProductos}"
+													var="pr" itemLabel="#{pr.descripcion}"
+													itemValue="#{pr.idProducto}" />
+												<p:column style="width:20%">
+													<f:facet name="header">
+														<h:outputText value="ID" />
+													</f:facet>
+													<!-- <h:outputText value="#{pr.producId}" /> -->
+												</p:column>
+
+												<p:column>
+													<f:facet name="header">
+														<h:outputText value="Producto" />
+													</f:facet>
+
+													<!--  <h:outputText value="#{pr.producNombre}" /> -->
+												</p:column>
+												<f:facet name="footer">
+													<h:outputText
+														value="#{beanComprador.listaProductos.size()} Producto(s)"
+														style="font-weight:bold;" styleClass="p-py-1 p-d-block" />
+												</f:facet>
+											</p:selectOneMenu>
+
+											<h:outputText value="Cantidad:" />
+											<p:spinner value="#{beanComprador.cantidadIngreso}" min="0" />
+
+											<h:outputText value="Precio" />
+											<p:spinner value="#{beanComprador.precioIngreso}" min="0"
+												stepFactor="0.01" placeholder="0,00" />
+
+										</p:panelGrid>
+									</h:panelGrid>
+
+									<br />
+									<p:commandButton title="Agregar producto al detalle"
+										style="width:200px; height:50px;" value="Agregar Producto"
+										icon="pi pi-shopping-cart" update="@form"
+										actionListener="#{beanComprador.actionListenerCrearProformaDet1()}" />
+
+
+									<div>
+										<p:commandButton title="Guardar Proforma"
+											value="Guardar Compra" style="width:200px; height:50px;"
+											icon="pi pi-save"
+											styleClass="ui-button-raised ui-button-success"
+											actionListener="#{beanComprador.actionListenerRegistrarProformasCab1()}" />
+									</div>
+
+
+								</h:panelGrid>
+								<h:form id="form2">
+								<h:panelGrid columns="1" columnClasses="centered">
+									
+
+										<p:dataTable
+											value="#{beanComprador.listaDetallesProformasCab}" var="d"
+											style="width:700px; height:40px;">
+
+											<p:column headerText="PRODUCTO">
+												<h:outputText value="#{d.producto.descripcion}" />
+											</p:column>
+											<p:column headerText="CANTIDAD">
+												<h:outputText value="#{d.pfDetCantidad}" />
+											</p:column>
+											<p:column headerText="PRECIO">
+												<h:outputText value="#{d.pfDetPrecio}" />
+											</p:column>
+											<p:column headerText="SUBTOTAL">
+												<h:outputText value="#{d.pfDetPreciototal}" />
+												<f:facet name="footer">
+													<div>Total:</div>
+													<h:outputText value="#{beanComprador.totalDetalle}" />
+												</f:facet>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</h:form>
+								<br />
+
+
+							</h:panelGrid>
+						</h:form>
+
+
+					</p:tab>
+
+				</p:tabView>
+			</div>
+		</div>
+	</h:panelGroup>
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+		responsive="true" width="350">
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no ui-button-flat" />
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirmdialog-yes" />
+	</p:confirmDialog>
 </body>
 </html>
